@@ -4,104 +4,171 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>StoryNest – English & Urdu</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  body {
-    margin: 0;
-    background: #120f0f;
-    color: #f2e9e1;
-    font-family: Georgia, serif;
+  :root {
+    --bg: #0D0D0D;
+    --card: #161616;
+    --yellow: #FFC107;
+    --text: #F5F5F5;
+    --muted: #A0A0A0;
   }
 
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* Header - Professional */
   .topbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 18px 24px;
-    border-bottom: 1px solid #1f1a1a;
+    padding: 16px 5%;
+    background: rgba(13,13,13,0.9);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #222;
     position: sticky;
     top: 0;
-    background: #120f0f;
-    z-index: 10;
+    z-index: 100;
   }
-  .logo { font-size: 22px; font-weight: bold; }
-  .logo .nest { color: #e6b800; }
-
-  .right-menu {
+  .logo {
+    font-size: 24px;
+    font-weight: 700;
+    font-family: 'Playfair Display', serif;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
   }
-  .btn-outline {
-    border: 1px solid #e6b800;
-    color: #e6b800;
+  .logo .nest { color: var(--yellow); }
+
+  .right-menu { display: flex; align-items: center; gap: 12px; }
+  
+  .btn {
+    padding: 9px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.2s;
+    border: 1px solid var(--yellow);
     background: transparent;
-    padding: 8px 16px;
-    border-radius: 6px;
-    font-size: 14px;
-    cursor: pointer;
-    font-weight: 500;
+    color: var(--yellow);
   }
-  .btn-outline:hover { background: #e6b800; color: #120f0f; }
-  .btn-fill {
-    border: 1px solid #e6b800;
-    color: #120f0f;
-    background: #e6b800;
-    padding: 8px 16px;
-    border-radius: 6px;
-    font-size: 14px;
-    cursor: pointer;
-    font-weight: 500;
+  .btn:hover { background: var(--yellow); color: var(--bg); }
+  
+  .btn-primary {
+    background: var(--yellow);
+    color: var(--bg);
+    border: 1px solid var(--yellow);
+    font-weight: 600;
+  }
+  .btn-primary:hover { background: #e6ac00; }
+
+  /* Hero Section */
+  .container { 
+    text-align: center; 
+    padding: 70px 20px 40px; 
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .container h1 { 
+    font-size: 48px; 
+    font-weight: 700; 
+    line-height: 1.3; 
+    font-family: 'Playfair Display', serif;
+  }
+  .container h1 .yellow { 
+    color: var(--yellow); 
+    font-style: italic; 
   }
 
-  .container { text-align: center; padding: 50px 20px 30px; }
-  .container h1 { font-size: 42px; font-weight: 500; line-height: 1.4; }
-  .container h1 .yellow { color: #e6b800; font-style: italic; font-weight: 700; }
-
+  /* Category Pills - Professional */
   .tags {
-    display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 35px;
+    display: flex; 
+    justify-content: center; 
+    gap: 10px; 
+    flex-wrap: wrap; 
+    margin-top: 40px;
   }
   .tag {
-    padding: 9px 20px; border-radius: 25px; background: #1f1a1a;
-    color: #aaa; border: 1px solid #2a2424; cursor: pointer; font-size: 15px;
+    padding: 10px 22px; 
+    border-radius: 30px; 
+    background: var(--card);
+    color: var(--muted); 
+    border: 1px solid #2a2a2a; 
+    cursor: pointer; 
+    font-size: 15px;
+    font-weight: 500;
+    transition: 0.2s;
   }
-  .tag.active { border: 1px solid #e6b800; color: #e6b800; }
+  .tag:hover { border-color: var(--yellow); color: var(--text); }
+  .tag.active {
+    background: transparent; 
+    border: 1px solid var(--yellow); 
+    color: var(--yellow);
+  }
 
+  /* Banner */
+  .banner-wrapper {
+    padding: 0 5% 60px;
+  }
   .banner {
-    width: 92%; max-width: 900px; margin: 35px auto; display: block; border-radius: 8px;
+    width: 100%; 
+    max-width: 1000px; 
+    margin: 0 auto; 
+    display: block; 
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
   }
 
-  /* Games Section - Hidden by default */
+  /* Games Section */
   .games-section {
     display: none;
-    padding: 40px 20px;
-    background: #1a1515;
-    text-align: center;
+    padding: 60px 5%;
+    background: var(--card);
   }
   .games-section.active { display: block; }
-  .games-section h2 { color: #e6b800; font-size: 32px; margin-bottom: 25px; }
+  .games-section h2 { 
+    color: var(--yellow); 
+    font-size: 36px; 
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 40px; 
+  }
   
   .game-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    max-width: 1000px;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+    max-width: 1100px;
     margin: 0 auto;
   }
   .game-card {
-    background: #241f1f;
-    padding: 20px;
-    border-radius: 10px;
-    border: 1px solid #2a2424;
+    background: var(--bg);
+    padding: 28px 20px;
+    border-radius: 14px;
+    border: 1px solid #2a2a2a;
     transition: 0.3s;
     cursor: pointer;
+    text-align: center;
   }
   .game-card:hover {
-    border-color: #e6b800;
-    transform: translateY(-5px);
+    border-color: var(--yellow);
+    transform: translateY(-6px);
+    box-shadow: 0 8px 30px rgba(255,193,7,0.1);
   }
-  .game-card .icon { font-size: 40px; margin-bottom: 10px; }
-  .game-card h3 { margin: 0; font-size: 18px; color: #e6b800; }
+  .game-card .icon { font-size: 42px; margin-bottom: 12px; }
+  .game-card h3 { margin: 0 0 8px; font-size: 18px; color: var(--yellow); font-weight: 600; }
+  .game-card p { margin: 0; color: var(--muted); font-size: 14px; }
 
+  @media (max-width: 768px) {
+    .container h1 { font-size: 34px; }
+    .btn { padding: 7px 12px; font-size: 13px; }
+    .right-menu { gap: 8px; }
+  }
 </style>
 </head>
 <body>
@@ -112,20 +179,19 @@
       📖Story<span class="nest">Nest</span>
     </div>
     <div class="right-menu">
-      <button class="btn-outline" onclick="toggleGames()">🎮 Games</button>
-      <button class="btn-outline">Login</button>
-      <button class="btn-fill">Sign Up</button>
+      <button class="btn" onclick="toggleGames()">🎮 Games</button>
+      <button class="btn">Login</button>
+      <button class="btn-primary">Sign Up</button>
     </div>
   </div>
 
-  <!-- Main Home Section -->
+  <!-- Home Section -->
   <div id="homeSection">
     <div class="container">
       <h1>
-        Stories that stay <br>
         with you — <br>
-        <span class="yellow">English & Urdu</span>, in <br>
-        one place.
+        <span class="yellow">English & Urdu</span>, <br>
+        in one place.
       </h1>
 
       <div class="tags">
@@ -137,33 +203,35 @@
       </div>
     </div>
 
-    <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200" 
-         class="banner" alt="Mountain">
+    <div class="banner-wrapper">
+      <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200" 
+           class="banner" alt="Lake">
+    </div>
   </div>
 
-  <!-- Games Section - Hidden -->
+  <!-- Games Section -->
   <div id="gamesSection" class="games-section">
-    <h2>🎮 Mini Games</h2>
+    <h2>🎮 Featured Games</h2>
     <div class="game-grid">
       <div class="game-card">
         <div class="icon">📝</div>
         <h3>Word Guess</h3>
-        <p>Guess the story word</p>
+        <p>Guess the story word in 3 tries</p>
       </div>
       <div class="game-card">
         <div class="icon">🧩</div>
         <h3>Story Puzzle</h3>
-        <p>Arrange the story</p>
+        <p>Arrange the paragraphs correctly</p>
       </div>
       <div class="game-card">
         <div class="icon">⚡</div>
         <h3>Quick Quiz</h3>
-        <p>Test your GK</p>
+        <p>Test your knowledge of stories</p>
       </div>
       <div class="game-card">
         <div class="icon">🎭</div>
         <h3>Role Play</h3>
-        <p>Act like a character</p>
+        <p>Become a character from a story</p>
       </div>
     </div>
   </div>
@@ -172,23 +240,13 @@
   function toggleGames() {
     let home = document.getElementById("homeSection");
     let games = document.getElementById("gamesSection");
-    
-    home.classList.toggle("active");
     games.classList.toggle("active");
-
-    if(games.classList.contains("active")){
-      home.style.display = "none";
-      games.style.display = "block";
-    } else {
-      home.style.display = "block";
-      games.style.display = "none";
-    }
+    home.style.display = games.classList.contains("active") ? "none" : "block";
   }
 </script>
 
 </body>
 </html>
-
 
 
 
