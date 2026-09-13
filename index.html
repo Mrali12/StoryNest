@@ -69,4 +69,186 @@
   .footer-col a:hover { color: var(--yellow); }
   .footer-bottom {
     text-align: center; padding-top: 20px; border-top: 1px solid #222; color: var(--muted); font-size: 13px;
- 
+  }
+  .admin-link { color: var(--yellow) !important; cursor: pointer; font-weight: 600; }
+
+  /* Modal */
+  .modal { display: none; position: fixed; z-index: 200; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); justify-content: center; align-items: center; }
+  .modal-content { background: var(--card); padding: 30px; border-radius: 14px; width: 90%; max-width: 400px; border: 1px solid #2a2a2a; }
+  .modal-content h2 { color: var(--yellow); text-align: center; margin-bottom: 20px; font-family: 'Playfair Display', serif; }
+  .modal-content input, .modal-content textarea, .modal-content select { width: 100%; padding: 12px; margin: 10px 0; background: var(--bg); border: 1px solid #333; border-radius: 8px; color: var(--text); box-sizing: border-box; }
+  .close { color: var(--muted); float: right; font-size: 24px; cursor: pointer; }
+</style>
+</head>
+<body>
+
+  <!-- Header - Sirf Games ka button -->
+  <div class="topbar">
+    <div class="logo">📖Story<span class="nest">Nest</span></div>
+    <div class="right-menu">
+      <button class="btn" onclick="toggleGames()">🎮 Games</button>
+    </div>
+  </div>
+
+  <!-- Home Section -->
+  <div id="homeSection">
+    <div class="container">
+      <h1>Stories that stay with you — <span class="yellow">English & Urdu</span>, in one place.</h1>
+      <div class="top-actions">
+        <button class="btn-add" id="addStoryBtn" onclick="openModal('addStoryModal')">+ Add New Story</button>
+      </div>
+    </div>
+
+    <!-- Stories Grid -->
+    <div class="stories-grid">
+      <div class="story-card">
+        <h3>Chand Ka Safar</h3>
+        <p>Ek chota larka chaand tak jana chahta tha. Wo roz raat ko...</p>
+        <div class="story-actions">
+          <button class="btn-tts" onclick="speakStory(this, 'Ek chota larka chaand tak jana chahta tha. Wo roz raat ko chaand ko dekhta aur sochta ke kaash main wahan ja sakun.')">🔊 Suniye</button>
+        </div>
+      </div>
+      <div class="story-card">
+        <h3>The Lost Key</h3>
+        <p>Sarah found an old key in her grandmother's attic. It didn't fit any door...</p>
+        <div class="story-actions">
+          <button class="btn-tts" onclick="speakStory(this, 'Sarah found an old key in her grandmother attic. It did not fit any door in the house.')">🔊 Listen</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Games Section - 5 Games -->
+  <div id="gamesSection" class="games-section">
+    <h2>🎮 Featured Games</h2>
+    <div class="game-grid">
+      <div class="game-card"><div class="icon">📝</div><h3>Word Guess</h3><p>Guess the story word</p></div>
+      <div class="game-card"><div class="icon">🧩</div><h3>Story Puzzle</h3><p>Arrange the story</p></div>
+      <div class="game-card"><div class="icon">⚡</div><h3>Quick Quiz</h3><p>Test your GK</p></div>
+      <div class="game-card"><div class="icon">🎭</div><h3>Role Play</h3><p>Act like a character</p></div>
+      <div class="game-card"><div class="icon">🎯</div><h3>Story Trivia</h3><p>Answer story questions</p></div>
+    </div>
+  </div>
+
+  <!-- Professional Footer -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>📖 StoryNest</h4>
+        <p style="color:var(--muted); font-size:14px;">English & Urdu stories in one place. Read, Listen and Enjoy.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Categories</h4>
+        <a href="#">Romance</a>
+        <a href="#">Horror</a>
+        <a href="#">Adventure</a>
+        <a href="#">Comedy</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="#">About Us</a>
+        <a href="#">Contact</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+      <div class="footer-col">
+        <h4>Admin</h4>
+        <a class="admin-link" onclick="openModal('adminModal')">🔐 Admin Panel</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2026 StoryNest. All Rights Reserved. Made with ❤️ in Pakistan
+    </div>
+  </footer>
+
+  <!-- ADMIN LOGIN POPUP -->
+  <div id="adminModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('adminModal')">&times;</span>
+      <h2>Admin Panel Login</h2>
+      <input type="text" id="adminUser" placeholder="Admin Username">
+      <input type="password" id="adminPass" placeholder="Password">
+      <button class="btn" style="width:100%; background:var(--yellow); color:var(--bg);" onclick="adminLogin()">Login</button>
+    </div>
+  </div>
+
+  <!-- ADD STORY POPUP -->
+  <div id="addStoryModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('addStoryModal')">&times;</span>
+      <h2>Add New Story</h2>
+      <input type="text" id="storyTitle" placeholder="Story Title">
+      <select id="storyCategory"><option>Romance</option><option>Horror</option><option>Adventure</option><option>Comedy</option></select>
+      <textarea id="storyContent" rows="5" placeholder="Write your story here..."></textarea>
+      <button class="btn" style="width:100%; background:var(--yellow); color:var(--bg);" onclick="addStory()">Publish Story</button>
+    </div>
+  </div>
+
+<script>
+  let isAdmin = false;
+  let currentSpeech = null;
+
+  const ADMIN_USER = "admin";
+  const ADMIN_PASS = "storynest123";
+
+  function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+  function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+  function adminLogin() {
+    let user = document.getElementById('adminUser').value;
+    let pass = document.getElementById('adminPass').value;
+    
+    if(user === ADMIN_USER && pass === ADMIN_PASS) {
+      isAdmin = true;
+      document.getElementById('addStoryBtn').style.display = 'block';
+      closeModal('adminModal');
+      alert("Welcome Admin! Ab aap story add kar sakte hain.");
+    } else {
+      alert("Galat Username ya Password! \n\nHint: admin / storynest123");
+    }
+  }
+  
+  function toggleGames() {
+    let home = document.getElementById("homeSection");
+    let games = document.getElementById("gamesSection");
+    games.classList.toggle("active");
+    home.style.display = games.classList.contains("active") ? "none" : "block";
+  }
+  
+  function addStory() {
+    let title = document.getElementById('storyTitle').value;
+    alert("Story '" + title + "' publish ho gayi!");
+    closeModal('addStoryModal');
+  }
+
+  function speakStory(button, text) {
+    if (currentSpeech && speechSynthesis.speaking) {
+      speechSynthesis.cancel();
+      button.innerText = '🔊 Suniye';
+      button.classList.remove('stop');
+      currentSpeech = null;
+      return;
+    }
+    currentSpeech = new SpeechSynthesisUtterance(text);
+    currentSpeech.lang = /[ا-ی]/.test(text) ? 'ur-PK' : 'en-US';
+    currentSpeech.rate = 0.9;
+    button.innerText = '⏹️ Rukiye';
+    button.classList.add('stop');
+    currentSpeech.onend = function() {
+      button.innerText = '🔊 Suniye';
+      button.classList.remove('stop');
+    };
+    speechSynthesis.speak(currentSpeech);
+  }
+</script>
+
+</body>
+                                                                                    </html>
+
+
+
+
+
+
+
+
