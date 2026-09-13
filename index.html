@@ -7,252 +7,76 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0D0D0D;
-    --card: #161616;
-    --yellow: #FFC107;
-    --text: #F5F5F5;
-    --muted: #A0A0A0;
+    --bg: #0D0D0D; --card: #161616; --yellow: #FFC107; 
+    --text: #F5F5F5; --muted: #A0A0A0;
   }
-
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Inter', sans-serif;
-  }
-
-  /* Header - Professional */
+  body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; }
+  
   .topbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px 5%;
-    background: rgba(13,13,13,0.9);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid #222;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 16px 5%; background: rgba(13,13,13,0.9); backdrop-filter: blur(10px);
+    border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 100;
   }
-  .logo {
-    font-size: 24px;
-    font-weight: 700;
-    font-family: 'Playfair Display', serif;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
+  .logo { font-size: 24px; font-weight: 700; font-family: 'Playfair Display', serif; }
   .logo .nest { color: var(--yellow); }
-
   .right-menu { display: flex; align-items: center; gap: 12px; }
   
-  .btn {
-    padding: 9px 18px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: 0.2s;
-    border: 1px solid var(--yellow);
-    background: transparent;
-    color: var(--yellow);
-  }
+  .btn { padding: 9px 18px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; border: 1px solid var(--yellow); background: transparent; color: var(--yellow); transition: 0.2s; }
   .btn:hover { background: var(--yellow); color: var(--bg); }
+
+  .container { text-align: center; padding: 50px 20px 20px; max-width: 800px; margin: 0 auto; }
+  .container h1 { font-size: 42px; font-weight: 700; line-height: 1.3; font-family: 'Playfair Display', serif; }
+  .container h1 .yellow { color: var(--yellow); font-style: italic; }
   
-  .btn-primary {
-    background: var(--yellow);
-    color: var(--bg);
-    border: 1px solid var(--yellow);
-    font-weight: 600;
-  }
-  .btn-primary:hover { background: #e6ac00; }
+  .top-actions { display: flex; justify-content: center; gap: 15px; margin: 25px 0; }
+  .btn-add { background: var(--yellow); color: var(--bg); padding: 10px 20px; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; display: none; }
 
-  /* Hero Section */
-  .container { 
-    text-align: center; 
-    padding: 70px 20px 40px; 
-    max-width: 800px;
-    margin: 0 auto;
+  /* Story Cards */
+  .stories-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px; padding: 0 5% 60px; max-width: 1200px; margin: 0 auto;
   }
-  .container h1 { 
-    font-size: 48px; 
-    font-weight: 700; 
-    line-height: 1.3; 
-    font-family: 'Playfair Display', serif;
+  .story-card {
+    background: var(--card); padding: 24px; border-radius: 14px; border: 1px solid #2a2a2a;
+    text-align: left; transition: 0.3s;
   }
-  .container h1 .yellow { 
-    color: var(--yellow); 
-    font-style: italic; 
-  }
+  .story-card:hover { border-color: var(--yellow); }
+  .story-card h3 { color: var(--yellow); margin: 0 0 10px; font-family: 'Playfair Display', serif; }
+  .story-card p { color: var(--muted); font-size: 14px; line-height: 1.6; }
+  .story-actions { display: flex; gap: 10px; margin-top: 15px; }
+  .btn-tts { background: var(--yellow); color: var(--bg); border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-weight: 600; }
+  .btn-tts.stop { background: #ff4444; color: white; }
 
-  /* Category Pills - Professional */
-  .tags {
-    display: flex; 
-    justify-content: center; 
-    gap: 10px; 
-    flex-wrap: wrap; 
-    margin-top: 40px;
-  }
-  .tag {
-    padding: 10px 22px; 
-    border-radius: 30px; 
-    background: var(--card);
-    color: var(--muted); 
-    border: 1px solid #2a2a2a; 
-    cursor: pointer; 
-    font-size: 15px;
-    font-weight: 500;
-    transition: 0.2s;
-  }
-  .tag:hover { border-color: var(--yellow); color: var(--text); }
-  .tag.active {
-    background: transparent; 
-    border: 1px solid var(--yellow); 
-    color: var(--yellow);
-  }
-
-  /* Banner */
-  .banner-wrapper {
-    padding: 0 5% 60px;
-  }
-  .banner {
-    width: 100%; 
-    max-width: 1000px; 
-    margin: 0 auto; 
-    display: block; 
-    border-radius: 16px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-  }
-
-  /* Games Section */
-  .games-section {
-    display: none;
-    padding: 60px 5%;
-    background: var(--card);
-  }
-  .games-section.active { display: block; }
-  .games-section h2 { 
-    color: var(--yellow); 
-    font-size: 36px; 
-    text-align: center;
-    font-family: 'Playfair Display', serif;
-    margin-bottom: 40px; 
-  }
-  
-  .game-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 24px;
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-  .game-card {
-    background: var(--bg);
-    padding: 28px 20px;
-    border-radius: 14px;
-    border: 1px solid #2a2a2a;
-    transition: 0.3s;
-    cursor: pointer;
-    text-align: center;
-  }
-  .game-card:hover {
-    border-color: var(--yellow);
-    transform: translateY(-6px);
-    box-shadow: 0 8px 30px rgba(255,193,7,0.1);
-  }
-  .game-card .icon { font-size: 42px; margin-bottom: 12px; }
-  .game-card h3 { margin: 0 0 8px; font-size: 18px; color: var(--yellow); font-weight: 600; }
-  .game-card p { margin: 0; color: var(--muted); font-size: 14px; }
-
-  @media (max-width: 768px) {
-    .container h1 { font-size: 34px; }
-    .btn { padding: 7px 12px; font-size: 13px; }
-    .right-menu { gap: 8px; }
-  }
+  /* Modal */
+  .modal { display: none; position: fixed; z-index: 200; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); justify-content: center; align-items: center; }
+  .modal-content { background: var(--card); padding: 30px; border-radius: 14px; width: 90%; max-width: 400px; border: 1px solid #2a2a2a; }
+  .modal-content h2 { color: var(--yellow); text-align: center; margin-bottom: 20px; font-family: 'Playfair Display', serif; }
+  .modal-content input, .modal-content textarea, .modal-content select { width: 100%; padding: 12px; margin: 10px 0; background: var(--bg); border: 1px solid #333; border-radius: 8px; color: var(--text); box-sizing: border-box; }
+  .close { color: var(--muted); float: right; font-size: 24px; cursor: pointer; }
 </style>
 </head>
 <body>
 
   <!-- Header -->
   <div class="topbar">
-    <div class="logo">
-      📖Story<span class="nest">Nest</span>
-    </div>
+    <div class="logo">📖Story<span class="nest">Nest</span></div>
     <div class="right-menu">
-      <button class="btn" onclick="toggleGames()">🎮 Games</button>
-      <button class="btn">Login</button>
-      <button class="btn-primary">Sign Up</button>
+      <!-- Sirf Admin Login button -->
+      <button class="btn" id="adminLoginBtn" onclick="openModal('adminModal')">Admin Login</button>
+      <button class="btn" id="adminLogoutBtn" style="display:none;" onclick="adminLogout()">Logout</button>
     </div>
   </div>
 
   <!-- Home Section -->
-  <div id="homeSection">
-    <div class="container">
-      <h1>
-        with you — <br>
-        <span class="yellow">English & Urdu</span>, <br>
-        in one place.
-      </h1>
-
-      <div class="tags">
-        <div class="tag active">All</div>
-        <div class="tag">Romance</div>
-        <div class="tag">Horror</div>
-        <div class="tag">Adventure</div>
-        <div class="tag">Comedy</div>
-      </div>
-    </div>
-
-    <div class="banner-wrapper">
-      <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200" 
-           class="banner" alt="Lake">
+  <div class="container">
+    <h1>Stories that stay with you — <span class="yellow">English & Urdu</span>, in one place.</h1>
+    <div class="top-actions">
+      <button class="btn-add" id="addStoryBtn" onclick="openModal('addStoryModal')">+ Add New Story</button>
     </div>
   </div>
 
-  <!-- Games Section -->
-  <div id="gamesSection" class="games-section">
-    <h2>🎮 Featured Games</h2>
-    <div class="game-grid">
-      <div class="game-card">
-        <div class="icon">📝</div>
-        <h3>Word Guess</h3>
-        <p>Guess the story word in 3 tries</p>
-      </div>
-      <div class="game-card">
-        <div class="icon">🧩</div>
-        <h3>Story Puzzle</h3>
-        <p>Arrange the paragraphs correctly</p>
-      </div>
-      <div class="game-card">
-        <div class="icon">⚡</div>
-        <h3>Quick Quiz</h3>
-        <p>Test your knowledge of stories</p>
-      </div>
-      <div class="game-card">
-        <div class="icon">🎭</div>
-        <h3>Role Play</h3>
-        <p>Become a character from a story</p>
-      </div>
-    </div>
-  </div>
-
-<script>
-  function toggleGames() {
-    let home = document.getElementById("homeSection");
-    let games = document.getElementById("gamesSection");
-    games.classList.toggle("active");
-    home.style.display = games.classList.contains("active") ? "none" : "block";
-  }
-</script>
-
-</body>
-</html>
-
-
-
-
-
-
-
-
-
+  <!-- Stories Grid -->
+  <div class="stories-grid">
+    <div class="story-card">
+      <h3>Chand Ka Safar</h3>
+      <p>Ek chota larka
