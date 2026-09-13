@@ -3,27 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>StoryNest — Stories + 3 Games</title>
+<title>StoryNest Pro</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:sans-serif}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI', sans-serif}
 body{background:#050A18; color:#E8F0FF;}
 header{padding:15px 20px; background:#0F1A2F; display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:10}
 .logo{font-size:24px; font-weight:bold}
 .logo span{color:#4DA8DA}
-.btn{border:1px solid #4DA8DA; background:transparent; color:#4DA8DA; padding:8px 15px; border-radius:6px; cursor:pointer; margin-left:8px}
+.btn{border:1px solid #4DA8DA; background:transparent; color:#4DA8DA; padding:8px 15px; border-radius:6px; cursor:pointer; margin:5px}
 .btn-solid{background:#4DA8DA; color:#050A18; font-weight:bold}
-.hero{text-align:center; padding:60px 20px}
-.games{display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:20px; padding:40px 20px; max-width:1200px; margin:auto}
-.card{background:#0F1A2F; padding:25px; border-radius:12px; border:1px solid #1F2F4D; text-align:center}
-.card h3{color:#4DA8DA; margin-bottom:10px}
-.overlay{position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:none; justify-content:center; align-items:center; z-index:999}
+.hero{text-align:center; padding:50px 20px}
+.games{display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:20px; padding:30px 20px; max-width:1200px; margin:auto}
+.card{background:#0F1A2F; padding:20px; border-radius:12px; border:1px solid #1F2F4D}
+.story-card{background:#0F1A2F; padding:15px; border-radius:10px; margin:15px; cursor:pointer}
+.story-card img{width:100%; height:150px; object-fit:cover; border-radius:8px}
+.overlay{position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:none; justify-content:center; align-items:center; z-index:999; overflow-y:auto}
 .overlay.show{display:flex}
-.modal{background:#0F1A2F; padding:30px; border-radius:10px; width:90%; max-width:400px; border:1px solid #4DA8DA}
-input{width:100%; padding:12px; margin:8px 0; background:#050A18; border:1px solid #1F2F4D; color:white; border-radius:5px}
-.game-box{background:#050A18; padding:15px; border-radius:10px; margin-top:15px; border:1px solid #1F2F4D}
-canvas{background:#000; border:2px solid #4DA8DA; border-radius:5px}
-#tttBoard{display:grid; grid-template-columns:repeat(3, 70px); gap:5px; margin:auto; justify-content:center}
+.modal{background:#0F1A2F; padding:25px; border-radius:10px; width:90%; max-width:500px; border:1px solid #4DA8DA}
+input, textarea, select{width:100%; padding:10px; margin:8px 0; background:#050A18; border:1px solid #1F2F4D; color:white; border-radius:5px}
+canvas{background:#000; border:2px solid #4DA8DA}
+#tttBoard{display:grid; grid-template-columns:repeat(3, 70px); gap:5px; justify-content:center}
 .cell{width:70px; height:70px; background:#050A18; border:2px solid #4DA8DA; font-size:35px; display:flex; align-items:center; justify-content:center; cursor:pointer}
+.comment-box{background:#050A18; padding:8px; border-radius:5px; margin-top:5px}
 </style>
 </head>
 <body>
@@ -31,17 +32,75 @@ canvas{background:#000; border:2px solid #4DA8DA; border-radius:5px}
 <header>
   <div class="logo">📖 Story<span>Nest</span></div>
   <div id="headerBtns">
-    <button class="btn" id="loginBtn">Log In</button>
-    <button class="btn btn-solid" id="signupBtn">Sign Up</button>
+    <button class="btn" onclick="show('login')">Log In</button>
+    <button class="btn btn-solid" onclick="show('signup')">Sign Up</button>
   </div>
 </header>
 
 <div class="hero">
   <h1>Stories that stay with you</h1>
-  <h2 style="color:#4DA8DA">English & Urdu + 3 Games</h2>
+  <h2 style="color:#4DA8DA">Urdu & English + 4 Games</h2>
 </div>
 
-<!-- 3 GAMES SECTION -->
+<!-- STORIES SECTION -->
+<div style="max-width:1200px; margin:auto; padding:20px">
+  <h2>Latest Stories</h2>
+  <div id="storiesList"></div>
+</div>
+
+<!-- GAMES SECTION -->
 <div class="games">
-  <!-- GAME 1: SNAKE -->
-  <div class
+  <div class="card"><h3>🐍 Snake</h3><button class="btn btn-solid" onclick="startSnake()">Play</button><canvas id="snakeCanvas" width="250" height="250"></canvas><p>Score: <span id="snakeScore">0</span></p></div>
+  <div class="card"><h3>⭕ Tic Tac Toe</h3><button class="btn btn-solid" onclick="resetTTT()">Play</button><div id="tttBoard"></div><p id="tttStatus"></p></div>
+  <div class="card"><h3>🧠 Story Quiz</h3><button class="btn btn-solid" onclick="startQuiz()">Play</button><div id="quizGame"></div></div>
+  <div class="card"><h3>🧩 Puzzle</h3><button class="btn btn-solid" onclick="startPuzzle()">Play</button><div id="puzzleGame">3x3 Puzzle - Numbers ko order me lagao</div></div>
+</div>
+
+<!-- MODALS -->
+<div class="overlay" id="login"><div class="modal"><h2>Log In</h2><input id="le" placeholder="Email"><input id="lp" type="password" placeholder="Password"><button class="btn btn-solid" style="width:100%" onclick="login()">Log In</button><button class="btn" style="width:100%" onclick="hide('login')">Close</button></div></div>
+<div class="overlay" id="signup"><div class="modal"><h2>Sign Up</h2><input id="sn" placeholder="Name"><input id="se" placeholder="Email"><input id="sp" type="password" placeholder="Password"><button class="btn btn-solid" style="width:100%" onclick="signup()">Sign Up</button><button class="btn" style="width:100%" onclick="hide('signup')">Close</button></div></div>
+<div class="overlay" id="admin"><div class="modal"><h2>➕ Add Story</h2><input id="stitle" placeholder="Story Title"><select id="slang"><option value="en">English</option><option value="ur">Urdu</option></select><textarea id="scontent" rows="4" placeholder="Story Content"></textarea><input type="file" id="simg" accept="image/*"><button class="btn btn-solid" style="width:100%" onclick="addStory()">Save Story</button><button class="btn" style="width:100%" onclick="hide('admin')">Close</button></div></div>
+<div class="overlay" id="storyView"><div class="modal" style="max-width:700px"><div id="storyContent"></div><button class="btn" onclick="hide('storyView')">Close</button></div></div>
+
+<script>
+const ADMIN = "adibhatti12345@gmail.com";
+let stories = JSON.parse(localStorage.getItem('stories')||'[]');
+let currentUser = JSON.parse(localStorage.getItem('cu'));
+
+function show(id){document.getElementById(id).classList.add('show')}
+function hide(id){document.getElementById(id).classList.remove('show')}
+
+// AUTH
+function signup(){let u={n:sn.value,e:se.value.toLowerCase(),p:sp.value}; let users=JSON.parse(localStorage.getItem('users')||'[]'); users.push(u); localStorage.setItem('users',JSON.stringify(users)); alert('Account ban gaya'); hide('signup')}
+function login(){let users=JSON.parse(localStorage.getItem('users')||'[]'); let u=users.find(x=>x.e==le.value.toLowerCase()&&x.p==lp.value); if(u){currentUser=u; localStorage.setItem('cu',JSON.stringify(u)); updateHeader(); hide('login')}else alert('Wrong')}
+function logout(){localStorage.removeItem('cu'); location.reload()}
+function updateHeader(){let btn=`<span style="color:#4DA8DA">Hi, ${currentUser.n}</span> <button class="btn" onclick="logout()">Logout</button>`; if(currentUser.e==ADMIN) btn=`<button class="btn" onclick="show('admin')">➕ Add Story</button>`+btn; document.getElementById('headerBtns').innerHTML=btn}
+
+// STORIES
+function addStory(){let file=simg.files[0]; let reader=new FileReader(); reader.onload=()=>{let s={id:Date.now(),title:stitle.value,lang:slang.value,content:scontent.value,img:reader.result,likes:0,comments:[],views:0}; stories.push(s); localStorage.setItem('stories',JSON.stringify(stories)); renderStories(); hide('admin')}; reader.readAsDataURL(file)}
+function renderStories(){let html=''; stories.forEach(s=>{html+=`<div class="story-card" onclick="openStory(${s.id})"><img src="${s.img}"><h3>${s.title}</h3><p>${s.lang=='ur'?'Urdu':'English'} | Views: ${s.views} | Likes: ${s.likes}</p></div>`}); document.getElementById('storiesList').innerHTML=html}
+function openStory(id){let s=stories.find(x=>x.id==id); s.views++; localStorage.setItem('stories',JSON.stringify(stories)); document.getElementById('storyContent').innerHTML=`<img src="${s.img}" style="width:100%"><h2>${s.title}</h2><p id="storyText">${s.content}</p><button class="btn btn-solid" onclick="speak()">🔊 Play</button> <button class="btn" onclick="like(${id})">❤️ Like ${s.likes}</button><div><h4>Comments</h4><input id="cmt"><button class="btn" onclick="comment(${id})">Post</button><div id="cmts">${s.comments.map(c=>`<div class="comment-box">${c}</div>`).join('')}</div></div>`; show('storyView')}
+function speak(){let u=new SpeechSynthesisUtterance(document.getElementById('storyText').innerText); speechSynthesis.speak(u)}
+function like(id){let s=stories.find(x=>x.id==id); s.likes++; localStorage.setItem('stories',JSON.stringify(stories)); openStory(id)}
+function comment(id){let s=stories.find(x=>x.id==id); s.comments.push(cmt.value); localStorage.setItem('stories',JSON.stringify(stories)); openStory(id)}
+renderStories();
+
+// GAMES - 4 GAMES COMPLETE
+// 1. SNAKE
+let snake,food,dir,score,snakeInt;
+function startSnake(){snake=[{x:5,y:5}];food={x:10,y:10};dir={x:1,y:0};score=0;clearInterval(snakeInt);snakeInt=setInterval(drawSnake,150);document.onkeydown=e=>{if(e.key=="ArrowUp"&&dir.y==0)dir={x:0,y:-1};if(e.key=="ArrowDown"&&dir.y==0)dir={x:0,y:1};if(e.key=="ArrowLeft"&&dir.x==
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
