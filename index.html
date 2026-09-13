@@ -1,10 +1,9 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>StoryNest — English & Urdu Stories</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📖</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Inter:wght@400;600&family=Noto+Nastaliq+Urdu:wght@600&display=swap" rel="stylesheet">
 <style>
   :root{ --ink:#14110F; --surface:#1E1A16; --border:#332C24; --paper:#F2E8D5; --gold:#C9A227; --maroon:#8A3324; --text:#EDE6DA; --text-dim:#A99E8C; }
@@ -49,7 +48,6 @@
  .listen-bar{display:flex; align-items:center; gap:10px; background:var(--surface); border:1px solid var(--border); padding:12px; margin-bottom:20px;}
  .listen-btn{width:38px; height:38px; border-radius:50%; background:var(--gold); color:var(--ink); border:none; font-size:1rem;}
   footer{border-top:1px solid var(--border); padding:34px 18px; text-align:center; color:var(--text-dim);}
-  @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 </style>
 </head>
 <body>
@@ -65,28 +63,20 @@
   </div>
 </header>
 
-<!-- HOME -->
 <div id="homeSection">
-  <section class="hero">
-    <h1>Stories that stay with you —<br><em>English &amp; Urdu</em>, in one place.</h1>
-  </section>
+  <section class="hero"><h1>Stories that stay with you —<br><em>English &amp; Urdu</em>, in one place.</h1></section>
   <div class="chip-row" id="chipRow"></div>
-  <div class="grid-wrap">
-    <div class="grid" id="storyGrid"></div>
-  </div>
+  <div class="grid-wrap"><div class="grid" id="storyGrid"></div></div>
 </div>
 
-<!-- GAMES -->
 <section id="gamesSection" style="display:none; max-width:1100px; margin:0 auto; padding:40px 18px;">
   <div style="text-align:center;"><h1>🎮 Game Zone</h1><button class="btn" onclick="showSection('homeSection')">← Back</button></div>
   <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:20px; margin-top:30px;">
     <div onclick="openGame('snake')" style="background:var(--surface); padding:20px; text-align:center; cursor:pointer;"><div style="font-size:60px;">🐍</div><h3>Snake</h3></div>
-    <div onclick="alert('Coming Soon')" style="background:var(--surface); padding:20px; text-align:center;"><div style="font-size:60px;">⭕</div><h3>Tic Tac Toe</h3></div>
   </div>
   <div id="gameContainer" style="margin-top:40px;"></div>
 </section>
 
-<!-- READER -->
 <div class="overlay" id="readerOverlay">
   <div class="reader">
     <div style="padding:14px 20px; border-bottom:1px solid var(--border);"><button class="btn" onclick="closeOverlay('readerOverlay')">← Back</button></div>
@@ -94,14 +84,8 @@
   </div>
 </div>
 
-<footer>
-  <div style="display:flex; gap:18px; justify-content:center;">
-    <a onclick="openModal('adminGateModal')">Admin</a>
-  </div>
-  <div>© <span id="year"></span> StoryNest</div>
-</footer>
+<footer><div style="display:flex; gap:18px; justify-content:center;"><a onclick="openModal('adminGateModal')">Admin</a></div><div>© <span id="year"></span> StoryNest</div></footer>
 
-<!-- MODALS -->
 <div class="overlay" id="loginModal"><div class="modal"><button class="modal-close" onclick="closeOverlay('loginModal')">&times;</button><h2>Log In</h2><div class="field"><label>Email</label><input id="loginEmail"></div><div class="field"><label>Password</label><input type="password" id="loginPass"></div><button class="btn btn-solid" style="width:100%;" onclick="doLogin()">Log In</button></div></div>
 <div class="overlay" id="signupModal"><div class="modal"><button class="modal-close" onclick="closeOverlay('signupModal')">&times;</button><h2>Sign Up</h2><div class="field"><label>Name</label><input id="signupName"></div><div class="field"><label>Email</label><input id="signupEmail"></div><div class="field"><label>Password</label><input type="password" id="signupPass"></div><button class="btn btn-solid" style="width:100%;" onclick="doSignup()">Sign Up</button></div></div>
 <div class="overlay" id="adminGateModal"><div class="modal"><button class="modal-close" onclick="closeOverlay('adminGateModal')">&times;</button><h2>Admin Password</h2><div class="field"><input type="password" id="adminPassInput" placeholder="admin123"></div><button class="btn btn-solid" style="width:100%;" onclick="checkAdminPass()">Enter</button></div></div>
@@ -116,33 +100,41 @@ function openModal(id){ document.getElementById(id).classList.add('show'); }
 function closeOverlay(id){ document.getElementById(id).classList.remove('show'); }
 function showSection(s){ document.getElementById('homeSection').style.display = s==='homeSection'?'block':'none'; document.getElementById('gamesSection').style.display = s==='gamesSection'?'block':'none'; }
 
-// LOGIN SYSTEM
 function doSignup(){ const u={name:signupName.value, email:signupEmail.value, pass:signupPass.value}; let users=JSON.parse(localStorage.getItem('users'))||[]; users.push(u); localStorage.setItem('users',JSON.stringify(users)); alert('Account ban gaya'); closeOverlay('signupModal'); }
 function doLogin(){ const users=JSON.parse(localStorage.getItem('users'))||[]; const u=users.find(x=>x.email===loginEmail.value && x.pass===loginPass.value); if(u){ localStorage.setItem('currentUser',JSON.stringify(u)); updateHeader(); closeOverlay('loginModal'); } else alert('Galat'); }
 function logout(){ localStorage.removeItem('currentUser'); location.reload(); }
 function updateHeader(){ const u=JSON.parse(localStorage.getItem('currentUser')); if(u){ headerActions.innerHTML=`<button class="btn" onclick="showSection('gamesSection')">🎮 Games</button><span style="color:var(--gold)">Hi, ${u.name}</span><button class="btn" onclick="logout()">Logout</button>`; } }
-window.onload=()=>{ updateHeader(); renderStories(); renderChips(); }
 
-// ADMIN
 function checkAdminPass(){ if(adminPassInput.value==='admin123'){ closeOverlay('adminGateModal'); openModal('adminOverlay'); renderAdminList(); } else alert('Wrong'); }
 function addStory(){ const s={id:Date.now(), title:fTitle.value, author:fAuthor.value, lang:document.querySelector('input[name="fLang"]:checked').value, cat:fCategory.value, content:fContent.value, cover:fCover.value, views:0, time:0}; stories.push(s); localStorage.setItem('stories',JSON.stringify(stories)); alert('Published'); renderStories(); renderAdminList(); }
 function renderAdminList(){ adminList.innerHTML=stories.map(s=>`<div>${s.title} - Views:${s.views} - Time:${s.time}s</div>`).join(''); }
 
-// STORIES + CATEGORIES
 const cats=['All','Romance','Horror','Adventure','Comedy'];
 function renderChips(){ chipRow.innerHTML=cats.map(c=>`<div class="chip" onclick="filterCat('${c}')">${c}</div>`).join(''); }
 function filterCat(c){ document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active')); event.target.classList.add('active'); let f=c==='All'?stories:stories.filter(s=>s.cat===c); renderStories(f); }
 function renderStories(arr=stories){ storyGrid.innerHTML=arr.map(s=>`<div class="card" onclick="openReader(${s.id})"><div class="card-cover"><img src="${s.cover||'https://via.placeholder.com/300x400'}"></div><div class="card-body"><div class="card-cat">${s.cat} - ${s.lang==='ur'?'Urdu':'English'}</div><div class="card-title">${s.title}</div><div class="card-meta">Views: ${s.views}</div></div></div>`).join(''); }
 
-// READER + TTS + VIEWS
 let currentStory=null; let startTime=0;
 function openReader(id){ currentStory=stories.find(s=>s.id===id); currentStory.views++; localStorage.setItem('stories',JSON.stringify(stories)); startTime=Date.now(); readerBody.innerHTML=`<div class="listen-bar"><button class="listen-btn" onclick="toggleSpeech()">▶</button><span>Listen</span></div><h1 class="card-title">${currentStory.title}</h1><div class="reader-content ${currentStory.lang==='ur'?'urdu':''}">${currentStory.content}</div>`; speech.text=currentStory.content; speech.lang=currentStory.lang==='ur'?'ur-PK':'en-US'; openModal('readerOverlay'); }
 readerOverlay.onclick=(e)=>{ if(e.target.id==='readerOverlay'){ let time=Math.floor((Date.now()-startTime)/1000); currentStory.time+=time; localStorage.setItem('stories',JSON.stringify(stories)); closeOverlay('readerOverlay'); } }
 function toggleSpeech(){ if(speechSynthesis.speaking) speechSynthesis.cancel(); else speechSynthesis.speak(speech); }
 
-// GAME
 function openGame(g){ if(g==='snake'){ gameContainer.innerHTML=`<div style="text-align:center;"><button class="btn btn-solid" onclick="startSnake()">PLAY SNAKE</button><canvas id="c" width="400" height="400" style="background:#111; border:2px solid var(--gold); margin-top:20px;"></canvas></div>`; } }
-function startSnake(){ alert('Snake logic yahan add hoga. Pehle stories test karo'); }
+function startSnake(){ alert('Snake game loading...'); }
+
+window.onload=()=>{ 
+  if(stories.length === 0){
+    stories = [
+      {id:1, title:"Mohabbat ki Dastan", author:"Ali", lang:"ur", cat:"Romance", content:"Ye ek khoobsurat Urdu kahani hai...", cover:"https://picsum.photos/300/400", views:0, time:0},
+      {id:2, title:"The Haunted House", author:"John", lang:"en", cat:"Horror", content:"It was a dark and stormy night...", cover:"https://picsum.photos/300/401", views:0, time:0}
+    ];
+    localStorage.setItem('stories',JSON.stringify(stories));
+  }
+  updateHeader(); 
+  renderStories(); 
+  renderChips(); 
+}
 </script>
 </body>
-</html>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </html>
+
