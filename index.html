@@ -3,51 +3,98 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>StoryNest</title>
-<link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Inter:wght@400;600&family=Noto+Nastaliq+Urdu:wght@600&display=swap" rel="stylesheet">
+<title>StoryNest — English & Urdu Stories + Games</title>
 <style>
-  :root{ --ink:#050A18; --surface:#0F1A2F; --border:#1F2F4D; --paper:#E8F0FF; --gold:#4DA8DA; --maroon:#FF6B6B; --text:#E8F0FF; --text-dim:#8AA1C1; }
-  *{box-sizing:border-box; margin:0; padding:0;}
-  body{ color:var(--text); font-family:'Inter',sans-serif; background:var(--ink); }
-  header{position:sticky; top:0; background:rgba(5,10,24,.95); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); padding:14px 20px;}
-  .header-inner{max-width:1200px; margin:0 auto; display:flex; align-items:center; gap:16px;}
-  .logo{font-size:1.6rem; font-weight:700; color:var(--paper); cursor:pointer; font-family:'Lora',serif;}
-  .logo span{color:var(--gold);}
-  .header-actions{margin-left:auto; display:flex; gap:10px;}
-  .btn{border:1px solid var(--gold); background:transparent; color:var(--gold); padding:8px 16px; border-radius:6px; cursor:pointer;}
-  .btn-solid{background:var(--gold); color:var(--ink);}
-  .overlay{position:fixed; inset:0; background:rgba(5,10,24,.9); z-index:100; display:none; align-items:center; justify-content:center;}
-  .overlay.show{display:flex;}
-  .modal{background:var(--surface); border:1px solid var(--border); max-width:400px; width:90%; padding:30px; border-radius:12px; position:relative;}
-  .modal-close{position:absolute; top:10px; right:14px; background:none; border:none; color:var(--text-dim); font-size:1.5rem; cursor:pointer;}
-  .field{margin-bottom:16px;}
-  .field label{display:block; font-size:.9rem; color:var(--text-dim); margin-bottom:6px;}
-  .field input{width:100%; background:var(--ink); border:1px solid var(--border); color:var(--text); padding:10px 14px; border-radius:8px;}
+*{box-sizing:border-box;margin:0;padding:0;font-family:sans-serif}
+body{background:#050A18; color:#E8F0FF;}
+header{padding:15px 20px; background:#0F1A2F; display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:10}
+.logo{font-size:24px; font-weight:bold}
+.logo span{color:#4DA8DA}
+.btn{border:1px solid #4DA8DA; background:transparent; color:#4DA8DA; padding:8px 15px; border-radius:6px; cursor:pointer; margin-left:8px}
+.btn-solid{background:#4DA8DA; color:#050A18; font-weight:bold}
+.hero{text-align:center; padding:80px 20px}
+.hero h1{font-size:40px}
+.hero h2{color:#4DA8DA; margin:10px 0}
+.games{display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:20px; padding:40px 20px; max-width:1100px; margin:auto}
+.card{background:#0F1A2F; padding:25px; border-radius:12px; border:1px solid #1F2F4D; text-align:center}
+.card h3{color:#4DA8DA; margin-bottom:10px}
+.overlay{position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); display:none; justify-content:center; align-items:center; z-index:999}
+.overlay.show{display:flex}
+.modal{background:#0F1A2F; padding:30px; border-radius:10px; width:90%; max-width:400px; border:1px solid #1F2F4D}
+input{width:100%; padding:12px; margin:8px 0; background:#050A18; border:1px solid #1F2F4D; color:white; border-radius:5px}
+.game-box{background:#0F1A2F; padding:20px; border-radius:10px; margin-top:15px; border:1px solid #1F2F4D}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="header-inner">
-    <div class="logo">📖 Story<span>Nest</span></div>
-    <div class="header-actions" id="headerActions">
-      <button class="btn" onclick="openModal('loginModal')">Log In</button>
-      <button class="btn btn-solid" onclick="openModal('signupModal')">Sign Up</button>
-    </div>
+  <div class="logo">📖 Story<span>Nest</span></div>
+  <div id="headerBtns">
+    <button class="btn" onclick="show('login')">Log In</button>
+    <button class="btn btn-solid" onclick="show('signup')">Sign Up</button>
   </div>
 </header>
 
-<div style="max-width:1200px; margin:50px auto; padding:20px; text-align:center;">
-  <h1>Welcome to StoryNest</h1>
-  <p style="color:var(--text-dim)">Login karke Admin Panel use karo</p>
+<div class="hero">
+  <h1>Stories that stay with you</h1>
+  <h2>English & Urdu + Fun Games</h2>
 </div>
 
-<div class="overlay" id="loginModal">
+<!-- 2 GAMES SECTION -->
+<div class="games">
+  <div class="card">
+    <h3>🎯 Guess The Word</h3>
+    <p>3 hints se word guess karo. Score banao!</p>
+    <button class="btn btn-solid" onclick="startGuessGame()">Play Now</button>
+    <div id="guessGame" class="game-box" style="display:none"></div>
+  </div>
+  <div class="card">
+    <h3>📚 Story Quiz</h3>
+    <p>Choti story parho aur 3 sawal ke jawab do.</p>
+    <button class="btn btn-solid" onclick="startQuizGame()">Play Now</button>
+    <div id="quizGame" class="game-box" style="display:none"></div>
+  </div>
+</div>
+
+<!-- LOGIN MODAL -->
+<div class="overlay" id="login">
   <div class="modal">
-    <button class="modal-close" onclick="closeModal('loginModal')">&times;</button>
     <h2>Log In</h2>
-    <div class="field"><label>Email</label><input type="email" id="loginEmail"></div>
-    <div class="field"><label>Password</label><input type="password" id="
+    <input id="le" placeholder="Email">
+    <input id="lp" type="password" placeholder="Password">
+    <button class="btn btn-solid" style="width:100%" onclick="login()">Log In</button>
+    <button class="btn" style="width:100%; margin-top:10px" onclick="hide('login')">Close</button>
+  </div>
+</div>
+
+<!-- SIGNUP MODAL -->
+<div class="overlay" id="signup">
+  <div class="modal">
+    <h2>Sign Up</h2>
+    <input id="sn" placeholder="Full Name">
+    <input id="se" placeholder="Email">
+    <input id="sp" type="password" placeholder="Password">
+    <button class="btn btn-solid" style="width:100%" onclick="signup()">Sign Up</button>
+    <button class="btn" style="width:100%; margin-top:10px" onclick="hide('signup')">Close</button>
+  </div>
+</div>
+
+<script>
+const ADMIN = "adibhatti12345@gmail.com";
+
+// LOGIN / SIGNUP LOGIC
+function show(id){document.getElementById(id).classList.add('show')}
+function hide(id){document.getElementById(id).classList.remove('show')}
+
+function signup(){
+  let u = {n:sn.value, e:se.value, p:sp.value};
+  if(!u.n||!u.e||!u.p){alert('Sab fields fill karo'); return}
+  let users = JSON.parse(localStorage.getItem('u')||'
+
+
+
+
+
 
 
 
