@@ -31,6 +31,16 @@
   .top-actions { display: flex; justify-content: center; gap: 15px; margin: 25px 0; }
   .btn-add { background: var(--yellow); color: var(--bg); padding: 10px 20px; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; display: none; }
 
+  /* Games Section */
+  .games-section { display: none; padding: 60px 5%; background: var(--card); }
+  .games-section.active { display: block; }
+  .games-section h2 { color: var(--yellow); font-size: 36px; text-align: center; font-family: 'Playfair Display', serif; margin-bottom: 40px; }
+  .game-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; max-width: 1100px; margin: 0 auto; }
+  .game-card { background: var(--bg); padding: 28px 20px; border-radius: 14px; border: 1px solid #2a2a2a; transition: 0.3s; cursor: pointer; text-align: center; }
+  .game-card:hover { border-color: var(--yellow); transform: translateY(-6px); }
+  .game-card .icon { font-size: 42px; margin-bottom: 12px; }
+  .game-card h3 { margin: 0 0 8px; font-size: 18px; color: var(--yellow); font-weight: 600; }
+
   /* Story Cards */
   .stories-grid {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -47,36 +57,16 @@
   .btn-tts { background: var(--yellow); color: var(--bg); border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-weight: 600; }
   .btn-tts.stop { background: #ff4444; color: white; }
 
-  /* Modal */
-  .modal { display: none; position: fixed; z-index: 200; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); justify-content: center; align-items: center; }
-  .modal-content { background: var(--card); padding: 30px; border-radius: 14px; width: 90%; max-width: 400px; border: 1px solid #2a2a2a; }
-  .modal-content h2 { color: var(--yellow); text-align: center; margin-bottom: 20px; font-family: 'Playfair Display', serif; }
-  .modal-content input, .modal-content textarea, .modal-content select { width: 100%; padding: 12px; margin: 10px 0; background: var(--bg); border: 1px solid #333; border-radius: 8px; color: var(--text); box-sizing: border-box; }
-  .close { color: var(--muted); float: right; font-size: 24px; cursor: pointer; }
-</style>
-</head>
-<body>
-
-  <!-- Header -->
-  <div class="topbar">
-    <div class="logo">📖Story<span class="nest">Nest</span></div>
-    <div class="right-menu">
-      <!-- Sirf Admin Login button -->
-      <button class="btn" id="adminLoginBtn" onclick="openModal('adminModal')">Admin Login</button>
-      <button class="btn" id="adminLogoutBtn" style="display:none;" onclick="adminLogout()">Logout</button>
-    </div>
-  </div>
-
-  <!-- Home Section -->
-  <div class="container">
-    <h1>Stories that stay with you — <span class="yellow">English & Urdu</span>, in one place.</h1>
-    <div class="top-actions">
-      <button class="btn-add" id="addStoryBtn" onclick="openModal('addStoryModal')">+ Add New Story</button>
-    </div>
-  </div>
-
-  <!-- Stories Grid -->
-  <div class="stories-grid">
-    <div class="story-card">
-      <h3>Chand Ka Safar</h3>
-      <p>Ek chota larka
+  /* Footer */
+  footer {
+    background: var(--card); padding: 50px 5% 20px; border-top: 1px solid #222;
+  }
+  .footer-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; margin-bottom: 30px;
+  }
+  .footer-col h4 { color: var(--yellow); margin-bottom: 15px; font-family: 'Playfair Display', serif; }
+  .footer-col a { display: block; color: var(--muted); text-decoration: none; margin-bottom: 10px; font-size: 14px; }
+  .footer-col a:hover { color: var(--yellow); }
+  .footer-bottom {
+    text-align: center; padding-top: 20px; border-top: 1px solid #222; color: var(--muted); font-size: 13px;
+ 
