@@ -18,34 +18,39 @@
     align-items: center;
     padding: 18px 24px;
     border-bottom: 1px solid #1f1a1a;
+    position: sticky;
+    top: 0;
+    background: #120f0f;
+    z-index: 10;
   }
-  .logo {
-    font-size: 22px;
-    font-weight: bold;
-  }
+  .logo { font-size: 22px; font-weight: bold; }
   .logo .nest { color: #e6b800; }
 
   .right-menu {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
   }
   .btn-outline {
     border: 1px solid #e6b800;
     color: #e6b800;
     background: transparent;
-    padding: 7px 14px;
-    border-radius: 5px;
+    padding: 8px 16px;
+    border-radius: 6px;
     font-size: 14px;
     cursor: pointer;
+    font-weight: 500;
   }
-  .btn-outline:hover {
-    background: #e6b800;
+  .btn-outline:hover { background: #e6b800; color: #120f0f; }
+  .btn-fill {
+    border: 1px solid #e6b800;
     color: #120f0f;
-  }
-  .greet {
-    color: #e6b800;
-    font-size: 15px;
+    background: #e6b800;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: 500;
   }
 
   .container { text-align: center; padding: 50px 20px 30px; }
@@ -59,13 +64,44 @@
     padding: 9px 20px; border-radius: 25px; background: #1f1a1a;
     color: #aaa; border: 1px solid #2a2424; cursor: pointer; font-size: 15px;
   }
-  .tag.active {
-    background: transparent; border: 1px solid #e6b800; color: #e6b800;
-  }
+  .tag.active { border: 1px solid #e6b800; color: #e6b800; }
 
   .banner {
     width: 92%; max-width: 900px; margin: 35px auto; display: block; border-radius: 8px;
   }
+
+  /* Games Section - Hidden by default */
+  .games-section {
+    display: none;
+    padding: 40px 20px;
+    background: #1a1515;
+    text-align: center;
+  }
+  .games-section.active { display: block; }
+  .games-section h2 { color: #e6b800; font-size: 32px; margin-bottom: 25px; }
+  
+  .game-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .game-card {
+    background: #241f1f;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #2a2424;
+    transition: 0.3s;
+    cursor: pointer;
+  }
+  .game-card:hover {
+    border-color: #e6b800;
+    transform: translateY(-5px);
+  }
+  .game-card .icon { font-size: 40px; margin-bottom: 10px; }
+  .game-card h3 { margin: 0; font-size: 18px; color: #e6b800; }
+
 </style>
 </head>
 <body>
@@ -76,40 +112,89 @@
       📖Story<span class="nest">Nest</span>
     </div>
     <div class="right-menu">
-      <button class="btn-outline">🎮 Games</button>
-      
-      <!-- Yahan 2 option hain. Ek waqt me sirf ek show karo -->
-      <!-- Option 1: Jab user Login NAHI hai -->
+      <button class="btn-outline" onclick="toggleGames()">🎮 Games</button>
       <button class="btn-outline">Login</button>
-
-      <!-- Option 2: Jab user Login HAI -->
-      <!-- 
-      <div class="greet">Hi, Ali raza</div>
-      <button class="btn-outline">Logout</button>
-      -->
+      <button class="btn-fill">Sign Up</button>
     </div>
   </div>
 
-  <!-- Hero Section -->
-  <div class="container">
-    <h1>
-      Stories that stay <br>
-      with you — <br>
-      <span class="yellow">English & Urdu</span>, in <br>
-      one place.
-    </h1>
+  <!-- Main Home Section -->
+  <div id="homeSection">
+    <div class="container">
+      <h1>
+        Stories that stay <br>
+        with you — <br>
+        <span class="yellow">English & Urdu</span>, in <br>
+        one place.
+      </h1>
 
-    <div class="tags">
-      <div class="tag active">All</div>
-      <div class="tag">Romance</div>
-      <div class="tag">Horror</div>
-      <div class="tag">Adventure</div>
-      <div class="tag">Comedy</div>
+      <div class="tags">
+        <div class="tag active">All</div>
+        <div class="tag">Romance</div>
+        <div class="tag">Horror</div>
+        <div class="tag">Adventure</div>
+        <div class="tag">Comedy</div>
+      </div>
+    </div>
+
+    <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200" 
+         class="banner" alt="Mountain">
+  </div>
+
+  <!-- Games Section - Hidden -->
+  <div id="gamesSection" class="games-section">
+    <h2>🎮 Mini Games</h2>
+    <div class="game-grid">
+      <div class="game-card">
+        <div class="icon">📝</div>
+        <h3>Word Guess</h3>
+        <p>Guess the story word</p>
+      </div>
+      <div class="game-card">
+        <div class="icon">🧩</div>
+        <h3>Story Puzzle</h3>
+        <p>Arrange the story</p>
+      </div>
+      <div class="game-card">
+        <div class="icon">⚡</div>
+        <h3>Quick Quiz</h3>
+        <p>Test your GK</p>
+      </div>
+      <div class="game-card">
+        <div class="icon">🎭</div>
+        <h3>Role Play</h3>
+        <p>Act like a character</p>
+      </div>
     </div>
   </div>
 
-  <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200" 
-       class="banner" alt="Mountain">
+<script>
+  function toggleGames() {
+    let home = document.getElementById("homeSection");
+    let games = document.getElementById("gamesSection");
+    
+    home.classList.toggle("active");
+    games.classList.toggle("active");
+
+    if(games.classList.contains("active")){
+      home.style.display = "none";
+      games.style.display = "block";
+    } else {
+      home.style.display = "block";
+      games.style.display = "none";
+    }
+  }
+</script>
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
