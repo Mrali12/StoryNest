@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StoryNest — English &amp; Urdu Stories</title>
+<meta name="description" content="StoryNest — read English and Urdu stories: romance, horror, adventure, comedy and more, all in one place.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="StoryNest — English & Urdu Stories">
+<meta property="og:description" content="Stories that stay with you — English & Urdu, in one place. Romance, horror, adventure, comedy and more.">
+<meta property="og:image" content="https://api.iconify.design/twemoji/open-book.svg?width=630&height=630&color=%23C9A227">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="StoryNest — English & Urdu Stories">
+<meta name="twitter:description" content="Stories that stay with you — English & Urdu, in one place.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📖</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14110F; --surface:#1E1A16; --surface2:#241F19; --border:#332C24;
+    --paper:#F2E8D5; --paper-dim:#DCCFAE;
+    --gold:#C9A227; --gold-bright:#E4BE3E; --maroon:#8A3324;
+    --text:#EDE6DA; --text-dim:#A99E8C; --danger:#B4443A; --good:#4E7C4A;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    color:var(--text); font-family:'Inter',sans-serif; line-height:1.5; min-height:100vh;
+    background-color:var(--ink);
+    background-image:
+      radial-gradient(ellipse 900px 500px at 15% -10%, rgba(201,162,39,.16), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 100% 10%, rgba(138,51,36,.14), transparent 60%),
+      radial-gradient(ellipse 1200px 800px at 50% 100%, rgba(201,162,39,.06), transparent 70%),
+      repeating-linear-gradient(0deg, rgba(255,255,255,.015) 0px, rgba(255,255,255,.015) 1px, transparent 1px, transparent 3px);
+    background-attachment:fixed, fixed, fixed, fixed;
+  }
+  h1,h2,h3,.serif{font-family:'Lora',serif;}
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  button{font-family:inherit; cursor:pointer;}
+  .urdu{font-family:'Noto Nastaliq Urdu', serif; direction:rtl; line-height:2.1;}
+
+  /* ---------- Header ---------- */
+  header{position:sticky; top:0; z-index:40; background:rgba(20,17,15,.92); backdrop-filter:blur(8px); border-bottom:1px solid var(--border);}
+  .header-inner{max-width:1100px; margin:0 auto; padding:14px 18px; display:flex; align-items:center; gap:16px; flex-wrap:wrap;}
+  .logo{font-size:1.5rem; font-weight:700; color:var(--paper); letter-spacing:.3px; display:flex; align-items:center; gap:8px; white-space:nowrap;}
+  .logo span{color:var(--gold);}
+  .search-wrap{flex:1; min-width:140px; position:relative;}
+  .search-wrap input{width:100%; background:var(--surface); border:1px solid var(--border); color:var(--text); padding:9px 14px; border-radius:8px; font-size:.92rem;}
+  .search-wrap input:focus{outline:none; border-color:var(--gold);}
+  .header-actions{display:flex; align-items:center; gap:10px;}
+  .btn{border:1px solid var(--gold); background:transparent; color:var(--gold); padding:8px 16px; font-size:.85rem; font-weight:600; border-radius:8px; transition:background .15s,color .15s;}
+  .btn:hover{background:var(--gold); color:var(--ink);}
+  .btn-solid{background:var(--gold); color:var(--ink); border:1px solid var(--gold);}
+  .btn-solid:hover{background:var(--gold-bright); border-color:var(--gold-bright);}
+  .btn-ghost{border-color:var(--border); color:var(--text-dim);}
+  .btn-ghost:hover{background:var(--surface2); color:var(--text); }
+  .avatar-chip{display:flex; align-items:center; gap:8px; background:var(--surface); border:1px solid var(--border); padding:6px 10px; border-radius:8px; font-size:.85rem; cursor:pointer;}
+  .avatar-circle{width:24px; height:24px; border-radius:50%; background:var(--maroon); color:#fff; display:flex; align-items:center; justify-content:center; font-size:.75rem; font-weight:700;}
+
+  /* ---------- Hero ---------- */
+  .hero{max-width:1100px; margin:0 auto; padding:56px 18px 28px; text-align:center;}
+  .hero h1{font-size:2.4rem; color:var(--paper); font-weight:600; line-height:1.25;}
+  .hero h1 em{color:var(--gold); font-style:normal;}
+  .hero p{margin-top:12px; color:var(--text-dim); font-size:1.02rem; max-width:520px; margin-left:auto; margin-right:auto;}
+
+  /* ---------- Reading progress bar ---------- */
+  .progress-track{position:fixed; top:0; left:0; height:3px; width:100%; background:transparent; z-index:110;}
+  .progress-fill{height:100%; width:0%; background:linear-gradient(90deg,var(--gold),var(--maroon)); transition:width .1s linear;}
+
+  /* ---------- Featured section ---------- */
+  .featured-wrap{max-width:1100px; margin:0 auto; padding:0 18px 10px;}
+  .featured-wrap h2{font-family:'Lora',serif; color:var(--paper); font-size:1.15rem; margin-bottom:14px; display:flex; align-items:center; gap:8px;}
+  .featured-row{display:flex; gap:16px; overflow-x:auto; padding-bottom:8px;}
+  .featured-card{flex:0 0 230px; background:var(--surface); border:1px solid var(--border); border-top:3px solid var(--gold); border-radius:14px; overflow:hidden; cursor:pointer; display:flex; flex-direction:column;}
+  .featured-card .card-cover{aspect-ratio:16/10;}
+  .featured-card .card-body{padding:12px 14px 14px;}
+
+  /* ---------- Related stories ---------- */
+  .related-wrap{margin-top:36px; padding-top:22px; border-top:1px solid var(--border);}
+  .related-wrap h3{font-family:'Lora',serif; color:var(--paper); font-size:1.05rem; margin-bottom:14px;}
+  .related-row{display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:14px;}
+  .related-row .card-cover{aspect-ratio:3/4;}
+  .related-row .card-body{padding:10px 12px 12px;}
+  .related-row .card-title{font-size:.92rem;}
+
+  .byline{color:var(--text-dim); font-size:.8rem; margin-bottom:2px;}
+
+  /* ---------- Listen bar (text-to-speech) ---------- */
+  .listen-bar{display:flex; align-items:center; gap:10px; flex-wrap:wrap; background:var(--surface); border:1px solid var(--border); padding:12px 16px; margin:18px 0 26px;}
+  .listen-btn{width:38px; height:38px; border-radius:50%; background:var(--ink); border:1px solid var(--border); color:var(--gold); font-size:1rem; display:flex; align-items:center; justify-content:center;}
+  .listen-btn:hover{border-color:var(--gold);}
+  .listen-btn.primary{background:var(--gold); color:var(--ink); border-color:var(--gold);}
+  .listen-label{font-size:.82rem; color:var(--text-dim); margin-right:2px;}
+  .speed-row{display:flex; gap:6px; margin-left:auto;}
+  .speed-btn{border:1px solid var(--border); background:var(--ink); color:var(--text-dim); font-size:.78rem; padding:6px 10px; border-radius:14px;}
+  .speed-btn.active{border-color:var(--gold); color:var(--gold);}
+
+  /* ---------- Games section ---------- */
+  .games-toggle-btn{border:1px solid var(--gold); background:transparent; color:var(--gold); padding:8px 16px; font-size:.85rem; font-weight:600; border-radius:8px;}
+  .games-toggle-btn:hover{background:var(--gold); color:var(--ink);}
+  .games-section{display:none; max-width:1100px; margin:0 auto; padding:40px 18px 60px;}
+  .games-section.active{display:block;}
+  .games-section h2{font-family:'Lora',serif; color:var(--gold); font-size:1.7rem; text-align:center; margin-bottom:30px;}
+  .game-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:18px;}
+  .game-card{background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:26px 18px; text-align:center; transition:.2s;}
+  .game-card:hover{border-color:var(--gold); transform:translateY(-4px);}
+  .game-card .icon{font-size:2.2rem; margin-bottom:10px;}
+  .game-card h3{color:var(--gold); font-size:1.02rem; margin-bottom:6px; font-family:'Lora',serif;}
+  .game-card p{color:var(--text-dim); font-size:.82rem;}
+  .games-soon{text-align:center; color:var(--text-dim); font-size:.82rem; margin-top:18px;}
+
+  /* ---------- Snake Game Overlay ---------- */
+  .game-overlay{position:fixed; inset:0; background:rgba(10,8,6,.96); z-index:300; display:none; flex-direction:column; align-items:center; justify-content:center;}
+  .game-overlay.show{display:flex;}
+  .game-header{width:100%; max-width:440px; display:flex; align-items:center; justify-content:space-between; padding:0 0 14px;}
+  .game-header h2{font-family:'Lora',serif; color:var(--gold); font-size:1.2rem;}
+  .game-close{background:none; border:1px solid var(--border); color:var(--text-dim); width:32px; height:32px; border-radius:50%; font-size:1.1rem; display:flex; align-items:center; justify-content:center;}
+  .score-row{display:flex; gap:24px; margin-bottom:14px;}
+  .score-box{text-align:center;}
+  .score-box .label{font-size:.72rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:.5px;}
+  .score-box .val{font-size:1.4rem; font-weight:700; color:var(--gold); font-family:'Lora',serif;}
+  #snakeCanvas{border:2px solid var(--gold); border-radius:8px; background:#0a0a0a; display:block; touch-action:none;}
+  .snake-msg{position:absolute; text-align:center; pointer-events:none;}
+  .snake-msg h3{font-family:'Lora',serif; color:var(--gold); font-size:1.5rem; margin-bottom:8px;}
+  .snake-msg p{color:var(--text-dim); font-size:.88rem; margin-bottom:16px;}
+  .snake-msg .play-btn{background:var(--gold); color:var(--ink); border:none; padding:12px 30px; border-radius:8px; font-size:1rem; font-weight:700; cursor:pointer; pointer-events:all;}
+  .dpad{display:grid; grid-template-columns:repeat(3,52px); grid-template-rows:repeat(3,52px); gap:4px; margin-top:18px;}
+  .dpad button{background:var(--surface); border:1px solid var(--border); color:var(--gold); font-size:1.3rem; border-radius:8px; display:flex; align-items:center; justify-content:center;}
+  .dpad button:active{background:var(--gold); color:var(--ink);}
+
+  /* ---------- Category chips ---------- */
+  .chip-row{max-width:1100px; margin:0 auto; padding:0 18px 26px; display:flex; gap:10px; flex-wrap:wrap; justify-content:center;}
+  .chip{border:1px solid var(--border); background:var(--surface); color:var(--text-dim); padding:7px 15px; font-size:.85rem; border-radius:20px; transition:all .15s;}
+  .chip.active,.chip:hover{border-color:var(--gold); color:var(--gold);}
+
+  /* ---------- Story grid ---------- */
+  .grid-wrap{max-width:1100px; margin:0 auto; padding:0 18px 60px;}
+  .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:22px;}
+  .card{background:var(--surface); border:1px solid var(--border); border-top:3px solid var(--maroon); border-radius:14px; overflow:hidden; cursor:pointer; display:flex; flex-direction:column; transition:transform .15s,border-color .15s;}
+  .card:hover{transform:translateY(-3px); border-top-color:var(--gold);}
+  .card-cover{aspect-ratio:3/4; background:linear-gradient(150deg,var(--surface2),var(--ink)); display:flex; align-items:center; justify-content:center; overflow:hidden; position:relative;}
+  .card-cover img{width:100%; height:100%; object-fit:cover;}
+  .card-cover .fallback{font-family:'Lora',serif; color:var(--paper-dim); font-size:1.6rem; padding:14px; text-align:center; opacity:.5;}
+  .lang-badge{position:absolute; top:8px; left:8px; background:rgba(20,17,15,.85); color:var(--gold); font-size:.68rem; font-weight:700; padding:3px 8px; letter-spacing:.5px;}
+  .card-body{padding:14px 14px 16px; flex:1; display:flex; flex-direction:column;}
+  .card-cat{color:var(--maroon); font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.5px;}
+  .card-title{font-family:'Lora',serif; font-size:1.08rem; font-weight:600; color:var(--paper); margin:5px 0 6px; line-height:1.3;}
+  .card-snip{color:var(--text-dim); font-size:.83rem; flex:1; line-height:1.5;}
+  .card-meta{display:flex; gap:14px; margin-top:10px; font-size:.76rem; color:var(--text-dim);}
+
+  .ad-slot{grid-column:1/-1; border:1px dashed var(--border); color:var(--text-dim); font-size:.78rem; text-align:center; padding:18px; letter-spacing:.4px;}
+
+  .empty-state{text-align:center; padding:60px 20px; color:var(--text-dim);}
+  .empty-state h3{color:var(--paper); font-family:'Lora',serif; margin-bottom:8px;}
+
+  /* ---------- Overlays ---------- */
+  .overlay{position:fixed; inset:0; background:rgba(10,8,6,.72); z-index:100; display:none; align-items:flex-start; justify-content:center; overflow-y:auto; padding:30px 14px;}
+  .overlay.show{display:flex;}
+  .modal{background:var(--surface); border:1px solid var(--border); border-radius:14px; max-width:440px; width:100%; padding:28px 24px; margin-top:20px;}
+  .modal h2{font-family:'Lora',serif; color:var(--paper); font-size:1.3rem; margin-bottom:18px;}
+  .field{margin-bottom:14px;}
+  .field label{display:block; font-size:.82rem; color:var(--text-dim); margin-bottom:5px;}
+  .field input,.field select,.field textarea{width:100%; background:var(--ink); border:1px solid var(--border); color:var(--text); padding:9px 12px; font-size:.9rem; border-radius:8px; font-family:inherit;}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none; border-color:var(--gold);}
+  .field textarea{min-height:160px; resize:vertical; line-height:1.6;}
+  .radio-row{display:flex; gap:16px;}
+  .radio-row label{display:flex; align-items:center; gap:6px; font-size:.85rem; color:var(--text);}
+  .modal-close{position:absolute; top:10px; right:14px; background:none; border:none; color:var(--text-dim); font-size:1.5rem; line-height:1;}
+  .modal{position:relative;}
+  .switch-line{text-align:center; margin-top:14px; font-size:.85rem; color:var(--text-dim);}
+  .switch-line a{color:var(--gold); font-weight:600;}
+
+  /* Reader */
+  .reader{background:var(--ink); max-width:720px; width:100%; margin-top:0; padding:0; min-height:100vh;}
+  .reader-top{position:sticky; top:0; background:rgba(20,17,15,.95); backdrop-filter:blur(6px); border-bottom:1px solid var(--border); padding:14px 20px; display:flex; align-items:center; justify-content:space-between; z-index:5;}
+  .reader-body{padding:26px 24px 60px;}
+  .reader-cover{width:100%; max-height:280px; object-fit:cover; margin-bottom:22px; border:1px solid var(--border);}
+  .reader-cat{color:var(--maroon); font-weight:700; font-size:.78rem; text-transform:uppercase; letter-spacing:.5px;}
+  .reader-title{font-family:'Lora',serif; font-size:1.7rem; color:var(--paper); margin:8px 0 6px; line-height:1.3;}
+  .reader-meta{color:var(--text-dim); font-size:.83rem; margin-bottom:22px; display:flex; gap:16px; flex-wrap:wrap;}
+  .reader-content{font-size:1.05rem; color:var(--text); white-space:pre-wrap; line-height:1.85;}
+  .reader-content.urdu{font-size:1.35rem;}
+  .reader-actions{display:flex; gap:10px; margin-top:34px; padding-top:22px; border-top:1px solid var(--border);}
+  .icon-btn{display:flex; align-items:center; gap:7px; background:var(--surface); border:1px solid var(--border); color:var(--text); padding:9px 16px; font-size:.85rem; border-radius:8px;}
+  .icon-btn.liked{border-color:var(--maroon); color:var(--maroon);}
+  .icon-btn.saved{border-color:var(--gold); color:var(--gold);}
+  .comments{margin-top:34px;}
+  .comments h3{font-family:'Lora',serif; color:var(--paper); font-size:1.1rem; margin-bottom:14px;}
+  .comment-form{display:flex; gap:8px; margin-bottom:18px;}
+  .comment-form input{flex:1; background:var(--surface); border:1px solid var(--border); color:var(--text); padding:9px 12px; border-radius:8px;}
+  .comment-item{border-bottom:1px solid var(--border); padding:10px 0; font-size:.88rem;}
+  .comment-item b{color:var(--gold);}
+  .comment-item span{color:var(--text-dim); font-size:.75rem; margin-left:8px;}
+
+  /* Admin */
+  .admin-wrap{max-width:760px; width:100%; background:var(--surface); border:1px solid var(--border); border-radius:14px; margin-top:16px; padding:26px 24px 40px;}
+  .admin-wrap h2{font-family:'Lora',serif; color:var(--paper); margin-bottom:20px;}
+  .admin-list{margin-top:30px; border-top:1px solid var(--border); padding-top:20px;}
+  .admin-row{display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid var(--border); font-size:.88rem;}
+  .admin-row .t{flex:1;}
+  .admin-row .t small{display:block; color:var(--text-dim); font-size:.75rem;}
+  .cat-add-row{display:flex; gap:8px;}
+  .cat-add-row input{flex:1;}
+  .cat-tags{display:flex; flex-wrap:wrap; gap:6px; margin-top:8px;}
+  .cat-tags span{background:var(--ink); border:1px solid var(--border); padding:4px 10px; font-size:.76rem; border-radius:12px; color:var(--text-dim);}
+
+  /* Toast + spinner */
+  #toast{position:fixed; bottom:22px; left:50%; transform:translateX(-50%); background:var(--paper); color:var(--ink); padding:11px 22px; border-radius:8px; font-size:.88rem; font-weight:600; z-index:200; opacity:0; pointer-events:none; transition:opacity .25s, transform .25s;}
+  #toast.show{opacity:1; transform:translateX(-50%) translateY(-6px);}
+  .spinner{width:34px; height:34px; border:3px solid var(--border); border-top-color:var(--gold); border-radius:50%; animation:spin .7s linear infinite; margin:40px auto;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  footer{border-top:1px solid var(--border); padding:34px 18px 24px; text-align:center; color:var(--text-dim); font-size:.82rem;}
+  footer .flinks{display:flex; gap:18px; justify-content:center; flex-wrap:wrap; margin-bottom:14px;}
+  footer .flinks a{color:var(--text-dim);}
+  footer .flinks a:hover{color:var(--gold);}
+  .footer-page-body{max-width:600px; margin:0 auto; text-align:left; color:var(--text-dim); font-size:.85rem; line-height:1.7;}
+
+  @media(max-width:640px){
+    .hero h1{font-size:1.7rem;}
+    .header-inner{gap:10px;}
+    .search-wrap{order:3; flex-basis:100%;}
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-track" id="progressTrack" style="display:none;"><div class="progress-fill" id="progressFill"></div></div>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">📖 Story<span>Nest</span></div>
+    <div class="search-wrap"><input id="searchInput" placeholder="Search stories..."></div>
+    <button class="games-toggle-btn" onclick="toggleGames()">🎮 Games</button>
+    <div class="header-actions" id="headerActions">
+      <button class="btn" onclick="openModal('loginModal')">Log In</button>
+      <button class="btn btn-solid" onclick="openModal('signupModal')">Sign Up</button>
+    </div>
+  </div>
+</header>
+
+<div id="homeContent">
+<section class="hero">
+  <h1>Stories that stay with you —<br><em>English &amp; Urdu</em>, in one place.</h1>
+  <p>Romance, horror, adventure, comedy and more. Pick a story, settle in, and read.</p>
+</section>
+
+<div class="featured-wrap" id="featuredWrap" style="display:none;">
+  <h2>🔥 Trending now</h2>
+  <div class="featured-row" id="featuredRow"></div>
+</div>
+
+<div class="chip-row" id="chipRow"></div>
+
+<div class="grid-wrap">
+  <div class="grid" id="storyGrid"></div>
+  <div class="empty-state" id="emptyState" style="display:none;">
+    <h3>No stories yet</h3>
+    <p>New stories are added regularly — check back soon.</p>
+  </div>
+</div>
+</div>
+
+<div class="games-section" id="gamesSection">
+  <h2>🎮 Featured Games</h2>
+  <div class="game-grid">
+    <div class="game-card" onclick="openSnakeGame()"><div class="icon">🐍</div><h3>Snake</h3><p>Eat the food, grow longer, don't crash!</p></div>
+    <div class="game-card" style="opacity:.5;"><div class="icon">📝</div><h3>Word Guess</h3><p>Coming soon</p></div>
+    <div class="game-card" style="opacity:.5;"><div class="icon">🧩</div><h3>Story Puzzle</h3><p>Coming soon</p></div>
+    <div class="game-card" style="opacity:.5;"><div class="icon">⚡</div><h3>Quick Quiz</h3><p>Coming soon</p></div>
+    <div class="game-card" style="opacity:.5;"><div class="icon">🎯</div><h3>Story Trivia</h3><p>Coming soon</p></div>
+  </div>
+  <p class="games-soon">More games coming soon — tap Snake to play now!</p>
+</div>
+
+<!-- Snake Game Overlay -->
+<div class="game-overlay" id="snakeOverlay">
+  <div class="game-header">
+    <h2>🐍 Snake</h2>
+    <button class="game-close" onclick="closeSnakeGame()">✕</button>
+  </div>
+  <div class="score-row">
+    <div class="score-box"><div class="label">Score</div><div class="val" id="snakeScore">0</div></div>
+    <div class="score-box"><div class="label">Best</div><div class="val" id="snakeBest">0</div></div>
+    <div class="score-box"><div class="label">Level</div><div class="val" id="snakeLevel">1</div></div>
+  </div>
+  <div style="position:relative; display:inline-block;">
+    <canvas id="snakeCanvas" width="320" height="320"></canvas>
+    <div class="snake-msg" id="snakeMsg" style="inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+      <h3>🐍 Snake</h3>
+      <p>Use arrow keys or D-Pad below<br>to control the snake</p>
+      <button class="play-btn" onclick="startSnake()">▶ Start Game</button>
+    </div>
+  </div>
+  <!-- Mobile D-Pad -->
+  <div class="dpad" id="dpad">
+    <div></div>
+    <button ontouchstart="snakeDir('UP')" onclick="snakeDir('UP')">▲</button>
+    <div></div>
+    <button ontouchstart="snakeDir('LEFT')" onclick="snakeDir('LEFT')">◀</button>
+    <button ontouchstart="snakeDir('DOWN')" onclick="snakeDir('DOWN')">▼</button>
+    <button ontouchstart="snakeDir('RIGHT')" onclick="snakeDir('RIGHT')">▶</button>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</div>
+
+<footer>
+  <div class="flinks">
+    <a onclick="openFooterPage('about')">About</a>
+    <a onclick="openFooterPage('contact')">Contact</a>
+    <a onclick="openFooterPage('privacy')">Privacy</a>
+    <a onclick="openFooterPage('terms')">Terms</a>
+    <a onclick="adminGate()">Admin</a>
+  </div>
+  <div>© <span id="year"></span> StoryNest. All stories belong to their authors.</div>
+</footer>
+
+
+<!-- Reader overlay -->
+<div class="overlay" id="readerOverlay">
+  <div class="reader">
+    <div class="reader-top">
+      <button class="btn btn-ghost" onclick="closeOverlay('readerOverlay')">← Back</button>
+      <div style="display:flex; gap:8px;">
+        <button class="icon-btn" id="shareBtn" onclick="shareStory()">Share</button>
+      </div>
+    </div>
+    <div class="reader-body" id="readerBody"></div>
+  </div>
+</div>
+
+<!-- Login modal -->
+<div class="overlay" id="loginModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeOverlay('loginModal')">&times;</button>
+    <h2>Log In</h2>
+    <div class="field"><label>Email</label><input type="email" id="loginEmail"></div>
+    <div class="field"><label>Password</label><input type="password" id="loginPass"></div>
+    <button class="btn btn-solid" style="width:100%;" onclick="doLogin()">Log In</button>
+    <div class="switch-line">New here? <a onclick="closeOverlay('loginModal'); openModal('signupModal')">Sign up</a></div>
+  </div>
+</div>
+
+<!-- Signup modal -->
+<div class="overlay" id="signupModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeOverlay('signupModal')">&times;</button>
+    <h2>Create Account</h2>
+    <div class="field"><label>Name</label><input type="text" id="signupName"></div>
+    <div class="field"><label>Email</label><input type="email" id="signupEmail"></div>
+    <div class="field"><label>Password</label><input type="password" id="signupPass"></div>
+    <button class="btn btn-solid" style="width:100%;" onclick="doSignup()">Sign Up</button>
+    <div class="switch-line">Already have an account? <a onclick="closeOverlay('signupModal'); openModal('loginModal')">Log in</a></div>
+  </div>
+</div>
+
+<!-- Admin password gate -->
+<div class="overlay" id="adminGateModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeOverlay('adminGateModal')">&times;</button>
+    <h2>Admin Access</h2>
+    <div class="field"><label>Password</label><input type="password" id="adminPassInput"></div>
+    <button class="btn btn-solid" style="width:100%;" onclick="checkAdminPass()">Enter</button>
+  </div>
+</div>
+
+<!-- Admin panel -->
+<div class="overlay" id="adminOverlay">
+  <div class="admin-wrap">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <h2>Admin Panel</h2>
+      <button class="btn btn-ghost" onclick="closeOverlay('adminOverlay')">Close</button>
+    </div>
+
+    <div class="field"><label>Title</label><input type="text" id="fTitle"></div>
+    <div class="field"><label>Author name (optional)</label><input type="text" id="fAuthor" placeholder="e.g. Ali"></div>
+
+    <div class="field">
+      <label>Language</label>
+      <div class="radio-row">
+        <label><input type="radio" name="fLang" value="en" checked> English</label>
+        <label><input type="radio" name="fLang" value="ur"> Urdu</label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Category</label>
+      <select id="fCategory"></select>
+    </div>
+    <div class="field">
+      <label>Add new category</label>
+      <div class="cat-add-row">
+        <input type="text" id="newCatInput" placeholder="e.g. Horror">
+        <button class="btn" onclick="addCategory()">Add</button>
+      </div>
+      <div class="cat-tags" id="catTags"></div>
+    </div>
+
+    <div class="field"><label>Cover image (optional)</label><input type="file" id="fCover" accept="image/*"></div>
+    <div class="field"><label>Story content</label><textarea id="fContent" placeholder="Write or paste the full story here..."></textarea></div>
+
+    <div id="adminProgress" style="display:none; height:4px; background:var(--border); margin-bottom:14px;"><div id="adminProgressFill" style="height:100%; width:0%; background:var(--gold);"></div></div>
+
+    <button class="btn btn-solid" id="publishBtn" onclick="publishStory()">Publish Story</button>
+
+    <div class="admin-list" id="adminList">
+      <h3 style="font-family:'Lora',serif; color:var(--paper); margin-bottom:10px;">Published stories</h3>
+      <div id="adminRows"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Saved stories -->
+<div class="overlay" id="savedOverlay">
+  <div class="modal" style="max-width:640px;">
+    <button class="modal-close" onclick="closeOverlay('savedOverlay')">&times;</button>
+    <h2>Saved Stories</h2>
+    <div class="grid" id="savedGrid" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr));"></div>
+  </div>
+</div>
+
+<!-- Footer info pages -->
+<div class="overlay" id="footerOverlay">
+  <div class="modal" style="max-width:560px;">
+    <button class="modal-close" onclick="closeOverlay('footerOverlay')">&times;</button>
+    <h2 id="footerTitle"></h2>
+    <div class="footer-page-body" id="footerBody"></div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import {
+  getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+  onAuthStateChanged, signOut, updateProfile
+} from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+import {
+  getFirestore, collection, addDoc, doc, updateDoc, deleteDoc, getDoc, setDoc,
+  onSnapshot, query, orderBy, where, getDocs, increment, serverTimestamp,
+  collection as col2
+} from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC3AdPwJdntaF3reap4VT03FveakG5Nt2E",
+  authDomain: "meri-dhun-aa79a.firebaseapp.com",
+  projectId: "meri-dhun-aa79a",
+  storageBucket: "meri-dhun-aa79a.firebasestorage.app",
+  messagingSenderId: "1042835727543",
+  appId: "1:1042835727543:web:81014e9e02b36c34a35932",
+  measurementId: "G-Z96959QWQD"
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+const CLOUDINARY_CLOUD_NAME = "vxbj4xpi";
+const CLOUDINARY_UPLOAD_PRESET = "ml_default";
+const ADMIN_PASSWORD = "Killer9211";
+
+const storiesCol = collection(db, "storynest_stories");
+const categoriesCol = collection(db, "storynest_categories");
+const bookmarksCol = collection(db, "storynest_bookmarks");
+
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2200);
+}
+window.openModal = (id)=> document.getElementById(id).classList.add('show');
+window.closeOverlay = (id)=>{
+  document.getElementById(id).classList.remove('show');
+  if(id === 'readerOverlay'){
+    document.getElementById('progressTrack').style.display = 'none';
+    document.title = 'StoryNest — English & Urdu Stories';
+    speechSynthesis.cancel();
+  }
+};
+
+window.toggleGames = function(){
+  const home = document.getElementById('homeContent');
+  const games = document.getElementById('gamesSection');
+  const showGames = !games.classList.contains('active');
+  games.classList.toggle('active', showGames);
+  home.style.display = showGames ? 'none' : '';
+};
+
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* ---------------- Auth ---------------- */
+window.doSignup = async function(){
+  const name = document.getElementById('signupName').value.trim();
+  const email = document.getElementById('signupEmail').value.trim();
+  const pass = document.getElementById('signupPass').value;
+  if(!name || !email || !pass) return toast('Please fill all fields');
+  try{
+    const cred = await createUserWithEmailAndPassword(auth, email, pass);
+    await updateProfile(cred.user, { displayName: name });
+    toast('Account created!');
+    closeOverlay('signupModal');
+  }catch(e){ toast(e.message.replace('Firebase: ','')); }
+};
+window.doLogin = async function(){
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass = document.getElementById('loginPass').value;
+  if(!email || !pass) return toast('Please fill all fields');
+  try{
+    await signInWithEmailAndPassword(auth, email, pass);
+    toast('Welcome back!');
+    closeOverlay('loginModal');
+  }catch(e){ toast(e.message.replace('Firebase: ','')); }
+};
+window.doLogout = async function(){ await signOut(auth); toast('Logged out'); };
+
+onAuthStateChanged(auth, (user)=>{
+  const wrap = document.getElementById('headerActions');
+  if(user){
+    const initial = (user.displayName || user.email || '?')[0].toUpperCase();
+    wrap.innerHTML = `<button class="btn btn-ghost" onclick="openSaved()">Saved</button><div class="avatar-chip" onclick="doLogout()"><div class="avatar-circle">${initial}</div>${user.displayName || user.email.split('@')[0]}</div>`;
+  } else {
+    wrap.innerHTML = `<button class="btn" onclick="openModal('loginModal')">Log In</button><button class="btn btn-solid" onclick="openModal('signupModal')">Sign Up</button>`;
+  }
+});
+
+/* ---------------- Categories ---------------- */
+let categories = [];
+let activeCategory = 'All';
+let allStories = [];
+
+onSnapshot(query(categoriesCol, orderBy('name')), (snap)=>{
+  categories = snap.docs.map(d=>d.data().name);
+  renderChips();
+  renderCategorySelect();
+});
+
+function renderChips(){
+  const row = document.getElementById('chipRow');
+  const all = ['All', ...categories];
+  row.innerHTML = all.map(c=>`<button class="chip ${c===activeCategory?'active':''}" onclick="setCategory('${c.replace(/'/g,"\\'")}')">${c}</button>`).join('');
+}
+window.setCategory = function(c){ activeCategory = c; renderChips(); renderGrid(); };
+
+function renderCategorySelect(){
+  const sel = document.getElementById('fCategory');
+  sel.innerHTML = categories.map(c=>`<option value="${c}">${c}</option>`).join('');
+  document.getElementById('catTags').innerHTML = categories.map(c=>`<span>${c}</span>`).join('');
+}
+
+window.addCategory = async function(){
+  const input = document.getElementById('newCatInput');
+  const name = input.value.trim();
+  if(!name) return;
+  if(categories.includes(name)) return toast('Category already exists');
+  await addDoc(categoriesCol, { name });
+  input.value = '';
+  toast('Category added');
+};
+
+/* ---------------- Stories ---------------- */
+onSnapshot(query(storiesCol, orderBy('createdAt','desc')), (snap)=>{
+  allStories = snap.docs.map(d=>({ id:d.id, ...d.data() }));
+  renderGrid();
+  renderAdminList();
+});
+
+function snippet(text, len){
+  const clean = (text||'').replace(/\s+/g,' ').trim();
+  return clean.length > len ? clean.slice(0,len) + '…' : clean;
+}
+function readingTime(text){
+  const words = (text||'').trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.round(words/200)) + ' min read';
+}
+
+function renderFeatured(){
+  const featWrap = document.getElementById('featuredWrap');
+  const featRow = document.getElementById('featuredRow');
+  const top = [...allStories].filter(s=>(s.views||0) > 0).sort((a,b)=>(b.views||0)-(a.views||0)).slice(0,6);
+  if(!top.length){ featWrap.style.display = 'none'; return; }
+  featWrap.style.display = 'block';
+  featRow.innerHTML = top.map(s=>`
+    <div class="featured-card" onclick="openStory('${s.id}')">
+      <div class="card-cover">
+        <span class="lang-badge">${s.language==='ur'?'اردو':'EN'}</span>
+        ${s.coverUrl ? `<img src="${s.coverUrl}" loading="lazy">` : `<div class="fallback">${(s.title||'').slice(0,2)}</div>`}
+      </div>
+      <div class="card-body">
+        <div class="card-cat">${s.category||'Story'}</div>
+        <div class="card-title ${s.language==='ur'?'urdu':''}" style="font-size:.98rem;">${s.title}</div>
+        <div class="card-meta"><span>👁 ${s.views||0}</span><span>❤ ${s.likes||0}</span></div>
+      </div>
+    </div>`).join('');
+}
+
+function renderGrid(){
+  renderFeatured();
+  const grid = document.getElementById('storyGrid');
+  const term = document.getElementById('searchInput').value.trim().toLowerCase();
+  let list = allStories.filter(s=>{
+    const catOk = activeCategory === 'All' || s.category === activeCategory;
+    const termOk = !term || (s.title||'').toLowerCase().includes(term);
+    return catOk && termOk;
+  });
+  document.getElementById('emptyState').style.display = list.length ? 'none' : 'block';
+  let html = '';
+  list.forEach((s, i)=>{
+    html += `
+    <div class="card" onclick="openStory('${s.id}')">
+      <div class="card-cover">
+        <span class="lang-badge">${s.language === 'ur' ? 'اردو' : 'EN'}</span>
+        ${s.coverUrl ? `<img src="${s.coverUrl}" loading="lazy">` : `<div class="fallback">${(s.title||'').slice(0,2)}</div>`}
+      </div>
+      <div class="card-body">
+        <div class="card-cat">${s.category||'Story'}</div>
+        <div class="card-title ${s.language==='ur'?'urdu':''}">${s.title||'Untitled'}</div>
+        ${s.author ? `<div class="byline">by ${s.author}</div>` : ''}
+        <div class="card-snip ${s.language==='ur'?'urdu':''}">${snippet(s.content, s.language==='ur'?60:110)}</div>
+        <div class="card-meta"><span>👁 ${s.views||0}</span><span>❤ ${s.likes||0}</span><span>${readingTime(s.content)}</span></div>
+      </div>
+    </div>`;
+    if((i+1) % 6 === 0){
+      html += `<div class="ad-slot">Advertisement space</div>`;
+    }
+  });
+  grid.innerHTML = html;
+}
+document.getElementById('searchInput').addEventListener('input', renderGrid);
+
+/* ---------------- Reader ---------------- */
+let currentStory = null;
+window.openStory = async function(id){
+  speechSynthesis.cancel();
+  const ref = doc(db, "storynest_stories", id);
+  const snap = await getDoc(ref);
+  if(!snap.exists()) return toast('Story not found');
+  currentStory = { id, ...snap.data() };
+
+  const seen = JSON.parse(localStorage.getItem('sn_seen')||'[]');
+  if(!seen.includes(id)){
+    seen.push(id);
+    localStorage.setItem('sn_seen', JSON.stringify(seen));
+    updateDoc(ref, { views: increment(1) });
+  }
+
+  const liked = JSON.parse(localStorage.getItem('sn_liked')||'[]').includes(id);
+  const isUrdu = currentStory.language === 'ur';
+  const isSaved = await checkIfSaved(id);
+
+  const related = allStories.filter(s=>s.id!==id && s.category===currentStory.category).slice(0,4);
+  const relatedHtml = related.length ? `
+    <div class="related-wrap">
+      <h3>You might also like</h3>
+      <div class="related-row">
+        ${related.map(s=>`
+          <div class="card" onclick="openStory('${s.id}')">
+            <div class="card-cover">
+              <span class="lang-badge">${s.language==='ur'?'اردو':'EN'}</span>
+              ${s.coverUrl ? `<img src="${s.coverUrl}" loading="lazy">` : `<div class="fallback">${(s.title||'').slice(0,2)}</div>`}
+            </div>
+            <div class="card-body"><div class="card-title ${s.language==='ur'?'urdu':''}">${s.title}</div></div>
+          </div>`).join('')}
+      </div>
+    </div>` : '';
+
+  document.getElementById('readerBody').innerHTML = `
+    ${currentStory.coverUrl ? `<img class="reader-cover" src="${currentStory.coverUrl}">` : ''}
+    <div class="reader-cat">${currentStory.category||'Story'}</div>
+    <div class="reader-title ${isUrdu?'urdu':''}">${currentStory.title}</div>
+    ${currentStory.author ? `<div class="byline">by ${currentStory.author}</div>` : ''}
+    <div class="reader-meta"><span>👁 ${(currentStory.views||0)+ (seen.includes(id)?0:1)}</span><span>❤ <span id="likeCount">${currentStory.likes||0}</span></span><span>${readingTime(currentStory.content)}</span></div>
+
+    <div class="listen-bar">
+      <span class="listen-label">🔊 Listen to this story</span>
+      <button class="listen-btn primary" id="ttsPlayBtn" onclick="ttsPlay()" title="Play">▶</button>
+      <button class="listen-btn" id="ttsPauseBtn" onclick="ttsPause()" title="Pause">⏸</button>
+      <button class="listen-btn" id="ttsStopBtn" onclick="ttsStop()" title="Stop">⏹</button>
+      <div class="speed-row">
+        <button class="speed-btn ${ttsRate===1?'active':''}" data-speed="1" onclick="setTtsSpeed(1)">1x</button>
+        <button class="speed-btn ${ttsRate===1.5?'active':''}" data-speed="1.5" onclick="setTtsSpeed(1.5)">1.5x</button>
+        <button class="speed-btn ${ttsRate===2?'active':''}" data-speed="2" onclick="setTtsSpeed(2)">2x</button>
+      </div>
+    </div>
+
+    <div class="reader-content ${isUrdu?'urdu':''}">${currentStory.content}</div>
+    <div class="reader-actions">
+      <button class="icon-btn ${liked?'liked':''}" id="likeBtn" onclick="toggleLike('${id}')">❤ Like</button>
+      <button class="icon-btn ${isSaved?'saved':''}" id="saveBtn" onclick="toggleSave('${id}')">🔖 ${isSaved?'Saved':'Save'}</button>
+    </div>
+    <div class="comments">
+      <h3>Comments</h3>
+      <div class="comment-form"><input id="commentInput" placeholder="Add a comment..."><button class="btn btn-solid" onclick="postComment('${id}')">Post</button></div>
+      <div id="commentList"></div>
+    </div>
+    ${relatedHtml}
+  `;
+  loadComments(id);
+  openModal('readerOverlay');
+  document.getElementById('readerOverlay').scrollTop = 0;
+  document.getElementById('progressTrack').style.display = 'block';
+  updateProgress();
+  document.title = currentStory.title + ' — StoryNest';
+};
+
+function updateProgress(){
+  const el = document.getElementById('readerOverlay');
+  const fill = document.getElementById('progressFill');
+  if(!el || !fill) return;
+  const pct = el.scrollHeight > el.clientHeight ? (el.scrollTop / (el.scrollHeight - el.clientHeight)) * 100 : 0;
+  fill.style.width = Math.min(100,pct) + '%';
+}
+document.getElementById('readerOverlay').addEventListener('scroll', updateProgress);
+
+/* ---------------- Text-to-speech (Listen) ---------------- */
+let ttsRate = 1;
+let ttsUtterance = null;
+
+function pickVoice(lang){
+  const voices = speechSynthesis.getVoices();
+  if(!voices.length) return null;
+  const want = lang === 'ur' ? 'ur' : 'en';
+  return voices.find(v=>v.lang.toLowerCase().startsWith(want)) || voices.find(v=>v.lang.toLowerCase().startsWith('en')) || voices[0];
+}
+
+window.ttsPlay = function(){
+  if(!currentStory) return;
+  if(speechSynthesis.paused && ttsUtterance){
+    speechSynthesis.resume();
+    return;
+  }
+  speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(currentStory.content);
+  utter.rate = ttsRate;
+  const voice = pickVoice(currentStory.language);
+  if(voice) utter.voice = voice;
+  utter.lang = currentStory.language === 'ur' ? 'ur-PK' : 'en-US';
+  utter.onend = ()=>{ document.getElementById('ttsPlayBtn')?.classList.add('primary'); };
+  ttsUtterance = utter;
+  speechSynthesis.speak(utter);
+  document.getElementById('ttsPlayBtn')?.classList.remove('primary');
+};
+window.ttsPause = function(){
+  if(speechSynthesis.speaking && !speechSynthesis.paused) speechSynthesis.pause();
+};
+window.ttsStop = function(){
+  speechSynthesis.cancel();
+  ttsUtterance = null;
+  document.getElementById('ttsPlayBtn')?.classList.add('primary');
+};
+window.setTtsSpeed = function(rate){
+  ttsRate = rate;
+  document.querySelectorAll('.speed-btn').forEach(b=>b.classList.toggle('active', parseFloat(b.dataset.speed)===rate));
+  if(speechSynthesis.speaking){
+    const wasUrdu = currentStory.language === 'ur';
+    speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(currentStory.content);
+    utter.rate = ttsRate;
+    const voice = pickVoice(currentStory.language);
+    if(voice) utter.voice = voice;
+    utter.lang = wasUrdu ? 'ur-PK' : 'en-US';
+    ttsUtterance = utter;
+    speechSynthesis.speak(utter);
+  }
+};
+
+window.toggleLike = async function(id){
+  let liked = JSON.parse(localStorage.getItem('sn_liked')||'[]');
+  const ref = doc(db, "storynest_stories", id);
+  const btn = document.getElementById('likeBtn');
+  const countEl = document.getElementById('likeCount');
+  if(liked.includes(id)){
+    liked = liked.filter(x=>x!==id);
+    await updateDoc(ref, { likes: increment(-1) });
+    btn.classList.remove('liked');
+    countEl.textContent = parseInt(countEl.textContent) - 1;
+  } else {
+    liked.push(id);
+    await updateDoc(ref, { likes: increment(1) });
+    btn.classList.add('liked');
+    countEl.textContent = parseInt(countEl.textContent) + 1;
+  }
+  localStorage.setItem('sn_liked', JSON.stringify(liked));
+};
+
+async function checkIfSaved(storyId){
+  const user = auth.currentUser;
+  if(!user) return false;
+  const ref = doc(db, "storynest_bookmarks", user.uid + '_' + storyId);
+  const snap = await getDoc(ref);
+  return snap.exists();
+}
+
+window.toggleSave = async function(storyId){
+  const user = auth.currentUser;
+  if(!user){ toast('Log in to save stories'); openModal('loginModal'); return; }
+  const ref = doc(db, "storynest_bookmarks", user.uid + '_' + storyId);
+  const btn = document.getElementById('saveBtn');
+  const already = await checkIfSaved(storyId);
+  if(already){
+    await deleteDoc(ref);
+    btn.classList.remove('saved'); btn.textContent = '🔖 Save';
+    toast('Removed from saved');
+  } else {
+    await setDoc(ref, { uid:user.uid, storyId, createdAt: serverTimestamp() });
+    btn.classList.add('saved'); btn.textContent = '🔖 Saved';
+    toast('Saved for later');
+  }
+};
+
+window.openSaved = async function(){
+  const user = auth.currentUser;
+  if(!user){ toast('Log in to view saved stories'); openModal('loginModal'); return; }
+  const q = query(bookmarksCol, where('uid','==',user.uid));
+  const snap = await getDocs(q);
+  const ids = snap.docs.map(d=>d.data().storyId);
+  const grid = document.getElementById('savedGrid');
+  const stories = allStories.filter(s=>ids.includes(s.id));
+  grid.innerHTML = stories.length ? stories.map(s=>`
+    <div class="card" onclick="closeOverlay('savedOverlay'); openStory('${s.id}')">
+      <div class="card-cover">
+        ${s.coverUrl ? `<img src="${s.coverUrl}" loading="lazy">` : `<div class="fallback">${(s.title||'').slice(0,2)}</div>`}
+      </div>
+      <div class="card-body"><div class="card-title ${s.language==='ur'?'urdu':''}" style="font-size:.92rem;">${s.title}</div></div>
+    </div>`).join('') : `<p style="color:var(--text-dim); grid-column:1/-1;">No saved stories yet — tap 🔖 Save while reading to add one.</p>`;
+  openModal('savedOverlay');
+};
+
+window.shareStory = function(){
+  if(!currentStory) return;
+  const url = location.href.split('#')[0] + '#story=' + currentStory.id;
+  if(navigator.share){
+    navigator.share({ title: currentStory.title, url });
+  } else {
+    navigator.clipboard.writeText(url);
+    toast('Link copied!');
+  }
+};
+
+function loadComments(storyId){
+  const commentsCol = col2(doc(db,"storynest_stories",storyId), "comments");
+  onSnapshot(query(commentsCol, orderBy('createdAt','desc')), (snap)=>{
+    const list = document.getElementById('commentList');
+    if(!list) return;
+    if(snap.empty){ list.innerHTML = `<p style="color:var(--text-dim); font-size:.85rem;">No comments yet — be the first.</p>`; return; }
+    list.innerHTML = snap.docs.map(d=>{
+      const c = d.data();
+      return `<div class="comment-item"><b>${c.name}</b><span>${c.createdAt ? new Date(c.createdAt.toDate()).toLocaleDateString() : ''}</span><div>${c.text}</div></div>`;
+    }).join('');
+  });
+}
+window.postComment = async function(storyId){
+  const input = document.getElementById('commentInput');
+  const text = input.value.trim();
+  if(!text) return;
+  const user = auth.currentUser;
+  const name = user ? (user.displayName || user.email.split('@')[0]) : 'Guest';
+  const commentsCol = col2(doc(db,"storynest_stories",storyId), "comments");
+  await addDoc(commentsCol, { text, name, createdAt: serverTimestamp() });
+  input.value = '';
+};
+
+/* ---------------- Admin ---------------- */
+window.adminGate = function(){ openModal('adminGateModal'); };
+window.checkAdminPass = function(){
+  const val = document.getElementById('adminPassInput').value;
+  if(val === ADMIN_PASSWORD){
+    closeOverlay('adminGateModal');
+    document.getElementById('adminPassInput').value = '';
+    openModal('adminOverlay');
+  } else {
+    toast('Wrong password');
+  }
+};
+
+async function uploadCoverToCloudinary(file, onProgress){
+  return new Promise((resolve,reject)=>{
+    const url = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`;
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', url);
+    xhr.upload.onprogress = (e)=>{ if(e.lengthComputable) onProgress(e.loaded/e.total); };
+    xhr.onload = ()=>{
+      if(xhr.status>=200 && xhr.status<300) resolve(JSON.parse(xhr.responseText));
+      else reject(new Error('Upload failed'));
+    };
+    xhr.onerror = ()=>reject(new Error('Upload failed'));
+    xhr.send(formData);
+  });
+}
+
+let editingId = null;
+window.publishStory = async function(){
+  const title = document.getElementById('fTitle').value.trim();
+  const author = document.getElementById('fAuthor').value.trim();
+  const language = document.querySelector('input[name="fLang"]:checked').value;
+  const category = document.getElementById('fCategory').value;
+  const content = document.getElementById('fContent').value.trim();
+  const coverFile = document.getElementById('fCover').files[0];
+  if(!title || !content) return toast('Title and story content are required');
+  if(!category) return toast('Add a category first');
+
+  const btn = document.getElementById('publishBtn');
+  btn.disabled = true; btn.textContent = 'Publishing...';
+  const progressWrap = document.getElementById('adminProgress');
+  const progressFill = document.getElementById('adminProgressFill');
+
+  try{
+    let coverUrl = editingId ? (allStories.find(s=>s.id===editingId)?.coverUrl || '') : '';
+    if(coverFile){
+      progressWrap.style.display = 'block';
+      const res = await uploadCoverToCloudinary(coverFile, (pct)=>{ progressFill.style.width = (pct*100)+'%'; });
+      coverUrl = res.secure_url;
+    }
+    const payload = { title, author, language, category, content, coverUrl };
+    if(editingId){
+      await updateDoc(doc(db,"storynest_stories", editingId), payload);
+      toast('Story updated');
+    } else {
+      await addDoc(storiesCol, { ...payload, views:0, likes:0, createdAt: serverTimestamp() });
+      toast('Story published');
+    }
+    resetAdminForm();
+  }catch(e){
+    toast('Something went wrong: ' + e.message);
+  }
+  btn.disabled = false; btn.textContent = 'Publish Story';
+  progressWrap.style.display = 'none'; progressFill.style.width='0%';
+};
+
+function resetAdminForm(){
+  document.getElementById('fTitle').value = '';
+  document.getElementById('fAuthor').value = '';
+  document.getElementById('fContent').value = '';
+  document.getElementById('fCover').value = '';
+  editingId = null;
+  document.getElementById('publishBtn').textContent = 'Publish Story';
+}
+
+window.editStory = function(id){
+  const s = allStories.find(x=>x.id===id);
+  if(!s) return;
+  editingId = id;
+  document.getElementById('fTitle').value = s.title || '';
+  document.getElementById('fAuthor').value = s.author || '';
+  document.getElementById('fContent').value = s.content || '';
+  document.querySelector(`input[name="fLang"][value="${s.language||'en'}"]`).checked = true;
+  document.getElementById('fCategory').value = s.category || '';
+  document.getElementById('publishBtn').textContent = 'Save Changes';
+  toast('Editing "' + s.title + '" — scroll up');
+  window.scrollTo({top:0, behavior:'smooth'});
+};
+
+window.deleteStory = async function(id){
+  if(!confirm('Delete this story permanently?')) return;
+  await deleteDoc(doc(db,"storynest_stories", id));
+  toast('Story deleted');
+};
+
+function renderAdminList(){
+  const wrap = document.getElementById('adminRows');
+  if(!wrap) return;
+  if(!allStories.length){ wrap.innerHTML = '<p style="color:var(--text-dim); font-size:.85rem;">No stories published yet.</p>'; return; }
+  wrap.innerHTML = allStories.map(s=>`
+    <div class="admin-row">
+      <div class="t">${s.title}<small>${s.category} · ${s.language==='ur'?'Urdu':'English'} · 👁 ${s.views||0} · ❤ ${s.likes||0}</small></div>
+      <button class="btn btn-ghost" onclick="editStory('${s.id}')">Edit</button>
+      <button class="btn" style="border-color:var(--danger); color:var(--danger);" onclick="deleteStory('${s.id}')">Delete</button>
+    </div>
+  `).join('');
+}
+
+/* ---------------- Footer pages ---------------- */
+const footerPages = {
+  about: { title:'About StoryNest', body:'StoryNest is a home for readers — a place to publish and enjoy English and Urdu stories across every genre, from short romances to full adventures. Stories are added regularly, and every reader is welcome to explore, like, comment, and share their favourites.' },
+  contact: { title:'Contact Us', body:'Have a story to share, a question, or feedback? Reach out through the email linked on this site\\'s owner account, and we\\'ll get back to you as soon as we can.' },
+  privacy: { title:'Privacy Policy', body:'We collect only what\\'s needed to run your account — your name and email for login, and basic activity like likes and comments. We never sell your information. Cookies and local storage are used to remember your reading history and preferences on this device.' },
+  terms: { title:'Terms of Use', body:'Stories on StoryNest belong to their respective authors. Please don\\'t copy or redistribute content without permission. Be respectful in comments — abusive or spam content will be removed. StoryNest may update these terms as the site grows.' },
+};
+window.openFooterPage = function(key){
+  const p = footerPages[key];
+  document.getElementById('footerTitle').textContent = p.title;
+  document.getElementById('footerBody').textContent = p.body;
+  openModal('footerOverlay');
+};
+
+/* ================== SNAKE GAME ================== */
+let snakeLoop = null;
+let snake = [], food = {}, dir = 'RIGHT', nextDir = 'RIGHT';
+let snakeScore = 0, bestScore = parseInt(localStorage.getItem('sn_snake_best')||'0');
+let gameRunning = false;
+const GRID = 20, CELL = 16;
+
+window.openSnakeGame = function(){
+  document.getElementById('snakeOverlay').classList.add('show');
+  document.getElementById('snakeBest').textContent = bestScore;
+  document.getElementById('snakeMsg').style.display = 'flex';
+};
+window.closeSnakeGame = function(){
+  stopSnake();
+  document.getElementById('snakeOverlay').classList.remove('show');
+};
+window.startSnake = function(){
+  document.getElementById('snakeMsg').style.display = 'none';
+  snake = [{x:10,y:10},{x:9,y:10},{x:8,y:10}];
+  dir = 'RIGHT'; nextDir = 'RIGHT';
+  snakeScore = 0;
+  document.getElementById('snakeScore').textContent = 0;
+  document.getElementById('snakeLevel').textContent = 1;
+  placeFood(); gameRunning = true;
+  clearInterval(snakeLoop);
+  snakeLoop = setInterval(gameTick, 150);
+};
+function stopSnake(){ clearInterval(snakeLoop); gameRunning = false; }
+function placeFood(){
+  let pos;
+  do { pos = {x:Math.floor(Math.random()*GRID), y:Math.floor(Math.random()*GRID)}; }
+  while(snake.some(s=>s.x===pos.x && s.y===pos.y));
+  food = pos;
+}
+function gameTick(){
+  dir = nextDir;
+  const head = {...snake[0]};
+  if(dir==='UP') head.y--;
+  else if(dir==='DOWN') head.y++;
+  else if(dir==='LEFT') head.x--;
+  else if(dir==='RIGHT') head.x++;
+  if(head.x<0||head.x>=GRID||head.y<0||head.y>=GRID){ gameOver(); return; }
+  if(snake.some(s=>s.x===head.x&&s.y===head.y)){ gameOver(); return; }
+  snake.unshift(head);
+  if(head.x===food.x && head.y===food.y){
+    snakeScore += 10;
+    document.getElementById('snakeScore').textContent = snakeScore;
+    const level = Math.floor(snakeScore/50)+1;
+    document.getElementById('snakeLevel').textContent = level;
+    if(snakeScore > bestScore){
+      bestScore = snakeScore;
+      localStorage.setItem('sn_snake_best', bestScore);
+      document.getElementById('snakeBest').textContent = bestScore;
+    }
+    clearInterval(snakeLoop);
+    snakeLoop = setInterval(gameTick, Math.max(60, 150-(level-1)*15));
+    placeFood();
+  } else { snake.pop(); }
+  drawSnake();
+}
+function gameOver(){
+  stopSnake();
+  const msg = document.getElementById('snakeMsg');
+  msg.innerHTML = `<h3>Game Over!</h3><p>Score: <b style="color:var(--gold)">${snakeScore}</b> &nbsp;|&nbsp; Best: <b style="color:var(--gold)">${bestScore}</b></p><button class="play-btn" onclick="startSnake()">▶ Play Again</button>`;
+  msg.style.display = 'flex';
+}
+function drawSnake(){
+  const canvas = document.getElementById('snakeCanvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0,0,320,320);
+  ctx.fillStyle = 'rgba(255,255,255,.04)';
+  for(let x=0;x<GRID;x++) for(let y=0;y<GRID;y++) ctx.fillRect(x*CELL+7,y*CELL+7,2,2);
+  ctx.fillStyle = '#C9A227';
+  ctx.beginPath();
+  ctx.arc(food.x*CELL+CELL/2, food.y*CELL+CELL/2, CELL/2-2, 0, Math.PI*2);
+  ctx.fill();
+  snake.forEach((seg,i)=>{
+    const alpha = i===0?1:Math.max(0.3,1-(i/snake.length)*0.7);
+    ctx.fillStyle = i===0?'#E4BE3E':`rgba(201,162,39,${alpha})`;
+    ctx.beginPath();
+    if(ctx.roundRect) ctx.roundRect(seg.x*CELL+1,seg.y*CELL+1,CELL-2,CELL-2,i===0?5:3);
+    else ctx.rect(seg.x*CELL+1,seg.y*CELL+1,CELL-2,CELL-2);
+    ctx.fill();
+    if(i===0){
+      ctx.fillStyle='#0a0a0a';
+      const ex=dir==='LEFT'?3:dir==='RIGHT'?CELL-5:4;
+      const ey=dir==='UP'?3:dir==='DOWN'?CELL-5:4;
+      ctx.fillRect(seg.x*CELL+ex,seg.y*CELL+ey,3,3);
+      ctx.fillRect(seg.x*CELL+ex+(dir==='UP'||dir==='DOWN'?6:0),seg.y*CELL+ey+(dir==='LEFT'||dir==='RIGHT'?6:0),3,3);
+    }
+  });
+}
+window.snakeDir = function(d){
+  const opp={UP:'DOWN',DOWN:'UP',LEFT:'RIGHT',RIGHT:'LEFT'};
+  if(d!==opp[dir]) nextDir=d;
+  if(!gameRunning) startSnake();
+};
+document.addEventListener('keydown',(e)=>{
+  if(!document.getElementById('snakeOverlay').classList.contains('show')) return;
+  const map={ArrowUp:'UP',ArrowDown:'DOWN',ArrowLeft:'LEFT',ArrowRight:'RIGHT'};
+  if(map[e.key]){ e.preventDefault(); window.snakeDir(map[e.key]); }
+  if(e.key===' '&&!gameRunning) startSnake();
+});
+/* ================== END SNAKE ================== */
+</script>
+</body>
+</html>
