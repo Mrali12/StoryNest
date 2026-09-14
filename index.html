@@ -3,43 +3,46 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>StoryNest — English & Urdu Stories</title>
+<title>StoryNest — English & Urdu Stories & Games</title>
 <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Inter:wght@400;600&family=Noto+Nastaliq+Urdu:wght@400;600&display=swap" rel="stylesheet">
 <style>
   :root{--ink:#14110F; --surface:#1E1A16; --border:#332C24; --gold:#C9A227; --maroon:#8A3324; --text:#EDE6DA; --text-dim:#A99E8C;}
   *{box-sizing:border-box; margin:0; padding:0;}
   body{color:var(--text); font-family:'Inter',sans-serif; background:var(--ink); min-height:100vh; display:flex; flex-direction:column;}
-  .urdu{font-family:'Noto Nastaliq Urdu', serif; direction:rtl; line-height:2.1;}
+ .urdu{font-family:'Noto Nastaliq Urdu', serif; direction:rtl; line-height:2.1;}
   header{position:sticky; top:0; background:rgba(20,17,15,.92); border-bottom:1px solid var(--border); padding:14px 18px; display:flex; justify-content:space-between;}
-  .logo{font-size:1.5rem; font-weight:700; color:var(--text);} .logo span{color:var(--gold);}
-  .btn{border:1px solid var(--gold); background:transparent; color:var(--gold); padding:8px 16px; border-radius:8px; cursor:pointer;}
-  .btn-solid{background:var(--gold); color:var(--ink);}
-  .hero{text-align:center; padding:50px 18px;} .hero h1{font-family:'Lora',serif; font-size:2.2rem;} .hero h1 em{color:var(--gold);}
-  .chip-row{display:flex; gap:10px; justify-content:center; padding:0 18px 20px; flex-wrap:wrap;}
-  .chip{border:1px solid var(--border); background:var(--surface); color:var(--text-dim); padding:7px 15px; border-radius:20px; cursor:pointer;}
-  .chip.active{border-color:var(--gold); color:var(--gold);}
-  .grid{max-width:1100px; margin:0 auto; padding:0 18px 60px; display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:22px; flex:1;}
-  .card{background:var(--surface); border:1px solid var(--border); border-top:3px solid var(--maroon); border-radius:14px; padding:16px; cursor:pointer;}
-  .card:hover{border-top-color:var(--gold);}
-  .card-cat{color:var(--maroon); font-size:.72rem; font-weight:700; text-transform:uppercase;}
-  .card-title{font-family:'Lora',serif; font-size:1.1rem; color:var(--gold); margin:5px 0;}
-  .overlay{position:fixed; inset:0; background:rgba(0,0,0,.7); z-index:100; display:none; align-items:center; justify-content:center;}
-  .overlay.show{display:flex;}
-  .modal{background:var(--surface); border:1px solid var(--border); border-radius:14px; max-width:500px; width:90%; padding:24px; position:relative;}
-  .modal-close{position:absolute; top:10px; right:14px; background:none; border:none; color:var(--text-dim); font-size:1.5rem; cursor:pointer;}
-  .field{margin-bottom:14px;} .field label{display:block; font-size:.8rem; color:var(--text-dim); margin-bottom:5px;}
-  .field input,.field select,.field textarea{width:100%; background:var(--ink); border:1px solid var(--border); color:var(--text); padding:9px 12px; border-radius:8px;}
-  .reader-body{max-width:700px; background:var(--surface); padding:24px; border-radius:14px;}
+ .logo{font-size:1.5rem; font-weight:700; color:var(--text);}.logo span{color:var(--gold);}
+ .btn{border:1px solid var(--gold); background:transparent; color:var(--gold); padding:8px 16px; border-radius:8px; cursor:pointer;}
+ .btn-solid{background:var(--gold); color:var(--ink);}
+ .hero{text-align:center; padding:50px 18px;}.hero h1{font-family:'Lora',serif; font-size:2.2rem;}.hero h1 em{color:var(--gold);}
+ .section-title{max-width:1100px; margin:0 auto; padding:20px 18px 10px; font-family:'Lora',serif; font-size:1.6rem;}.section-title span{color:var(--gold);}
+ .chip-row{display:flex; gap:10px; justify-content:center; padding:0 18px 20px; flex-wrap:wrap;}
+ .chip{border:1px solid var(--border); background:var(--surface); color:var(--text-dim); padding:7px 15px; border-radius:20px; cursor:pointer;}
+ .chip.active{border-color:var(--gold); color:var(--gold);}
+ .grid{max-width:1100px; margin:0 auto; padding:0 18px 60px; display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:22px; flex:1;}
+ .card{background:var(--surface); border:1px solid var(--border); border-top:3px solid var(--maroon); border-radius:14px; overflow:hidden; cursor:pointer;}
+ .card:hover{border-top-color:var(--gold);}
+ .card-cover{aspect-ratio:3/4; width:100%; object-fit:cover;}
+ .card-body{padding:14px;}
+ .card-cat{color:var(--maroon); font-size:.72rem; font-weight:700; text-transform:uppercase;}
+ .card-title{font-family:'Lora',serif; font-size:1.1rem; color:var(--gold); margin:5px 0;}
+ .game-card{aspect-ratio:1/1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:20px;}
+ .game-icon{font-size:3rem; margin-bottom:10px;}
+ .overlay{position:fixed; inset:0; background:rgba(0,0,0,.7); z-index:100; display:none; align-items:center; justify-content:center;}
+ .overlay.show{display:flex;}
+ .modal{background:var(--surface); border:1px solid var(--border); border-radius:14px; max-width:500px; width:90%; padding:24px; position:relative;}
+ .modal-close{position:absolute; top:10px; right:14px; background:none; border:none; color:var(--text-dim); font-size:1.5rem; cursor:pointer;}
+ .field{margin-bottom:14px;}.field label{display:block; font-size:.8rem; color:var(--text-dim); margin-bottom:5px;}
+ .field input,.field select,.field textarea{width:100%; background:var(--ink); border:1px solid var(--border); color:var(--text); padding:9px 12px; border-radius:8px;}
+ .field input[type="file"]{padding:6px; cursor:pointer;}
+ .img-preview{width:100%; max-height:150px; object-fit:cover; border-radius:8px; margin-top:8px; display:none;}
+ .reader-body{max-width:700px; background:var(--surface); padding:24px; border-radius:14px;}
   #toast{position:fixed; bottom:22px; left:50%; transform:translateX(-50%); background:var(--gold); color:var(--ink); padding:11px 22px; border-radius:8px; font-weight:600; opacity:0; transition:.25s;}
   #toast.show{opacity:1;}
-
-  /* FOOTER */
   footer{border-top:1px solid var(--border); background:var(--surface); padding:40px 18px 20px; margin-top:60px;}
-  .footer-inner{max-width:1100px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:30px;}
-  .footer-col h3{font-family:'Lora',serif; color:var(--gold); font-size:1.1rem; margin-bottom:12px;}
-  .footer-col p, .footer-col a{color:var(--text-dim); font-size:.85rem; line-height:1.8; display:block; margin-bottom:8px;}
-  .footer-col a:hover{color:var(--gold);}
-  .footer-bottom{text-align:center; padding-top:20px; margin-top:20px; border-top:1px solid var(--border); color:var(--text-dim); font-size:.8rem;}
+ .footer-inner{max-width:1100px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:30px;}
+ .footer-col h3{font-family:'Lora',serif; color:var(--gold); font-size:1.1rem; margin-bottom:12px;}
+ .footer-bottom{text-align:center; padding-top:20px; margin-top:20px; border-top:1px solid var(--border); color:var(--text-dim); font-size:.8rem;}
 </style>
 </head>
 <body>
@@ -49,10 +52,9 @@
   <button class="btn" onclick="openAdmin()">+ Add Story</button>
 </header>
 
-<div class="hero">
-  <h1>Stories that stay with you — <em>English & Urdu</em></h1>
-</div>
+<div class="hero"><h1>Stories that stay with you — <em>English & Urdu</em></h1></div>
 
+<h2 class="section-title">📚 <span>Stories</span></h2>
 <div class="chip-row" id="categoryChips">
   <button class="chip active" data-cat="All">All</button>
   <button class="chip" data-cat="Romance">Romance</button>
@@ -60,40 +62,19 @@
   <button class="chip" data-cat="Adventure">Adventure</button>
   <button class="chip" data-cat="Comedy">Comedy</button>
 </div>
+<div class="grid" id="storyGrid"></div>
 
-<div class="grid" id="storyGrid"><div style="text-align:center; color:var(--text-dim)">Loading...</div></div>
+<h2 class="section-title">🎮 <span>Mini Games</span></h2>
+<div class="grid" id="gamesGrid"></div>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-inner">
-    <div class="footer-col">
-      <h3>📖 StoryNest</h3>
-      <p>Stories that stay with you. Read and Listen English & Urdu stories in one place.</p>
-    </div>
-    <div class="footer-col">
-      <h3>Categories</h3>
-      <a href="#">Romance</a>
-      <a href="#">Horror</a>
-      <a href="#">Adventure</a>
-      <a href="#">Comedy</a>
-    </div>
-    <div class="footer-col">
-      <h3>Quick Links</h3>
-      <a href="#">Home</a>
-      <a href="#" onclick="openAdmin();return false;">Admin Panel</a>
-      <a href="#">About Us</a>
-      <a href="#">Contact</a>
-    </div>
-    <div class="footer-col">
-      <h3>Follow Us</h3>
-      <a href="#">Facebook</a>
-      <a href="#">Instagram</a>
-      <a href="#">YouTube</a>
-    </div>
+    <div class="footer-col"><h3>📖 StoryNest</h3></div>
+    <div class="footer-col"><h3>Categories</h3></div>
+    <div class="footer-col"><h3>Quick Links</h3></div>
+    <div class="footer-col"><h3>Follow Us</h3></div>
   </div>
-  <div class="footer-bottom">
-    © 2026 StoryNest. All rights reserved. Made with ❤️ in Pakistan
-  </div>
+  <div class="footer-bottom">© 2026 StoryNest. Made with ❤️ in Pakistan</div>
 </footer>
 
 <!-- ADMIN MODAL -->
@@ -102,18 +83,24 @@
     <button class="modal-close" onclick="closeAdmin()">&times;</button>
     <h2 style="font-family:Lora; margin-bottom:15px;">Add New Story</h2>
     <div class="field"><label>Story Title</label><input type="text" id="storyTitle"></div>
+
+    <!-- IMAGE UPLOAD FIELD NEW -->
+    <div class="field">
+      <label>Cover Image</label>
+      <input type="file" id="storyImageFile" accept="image/*">
+      <img id="imgPreview" class="img-preview">
+    </div>
+
     <div class="field">
       <label>Category</label>
-      <select id="storyCategory">
-        <option>Romance</option><option>Horror</option><option>Adventure</option><option>Comedy</option>
-      </select>
+      <select id="storyCategory"><option>Romance</option><option>Horror</option><option>Adventure</option><option>Comedy</option></select>
     </div>
     <div class="field">
       <label>Language</label>
       <select id="storyLang"><option value="en">English</option><option value="ur">Urdu</option></select>
     </div>
     <div class="field"><label>Story Content</label><textarea id="storyContent" rows="6"></textarea></div>
-    <button class="btn-solid" style="width:100%" onclick="addStory()">Publish Story</button>
+    <button class="btn-solid" style="width:100%" id="publishBtn" onclick="addStory()">Publish Story</button>
   </div>
 </div>
 
@@ -121,6 +108,7 @@
 <div id="readerModal" class="overlay">
   <div class="reader-body">
     <button class="btn" onclick="closeReader()" style="margin-bottom:15px;">← Back</button>
+    <img id="rImage" class="card-cover" style="margin-bottom:15px; border-radius:8px;">
     <div class="card-cat" id="rCat"></div>
     <h1 class="card-title" id="rTitle" style="font-size:1.6rem;"></h1>
     <div id="rContent" style="line-height:1.8; margin:15px 0;"></div>
@@ -133,118 +121,70 @@
 <!-- FIREBASE SDK -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
 
 <script>
-// ===== APNI FIREBASE CONFIG YAHAN PASTE KARO =====
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY",
   authDomain: "YOUR_AUTH_DOMAIN",
   projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT_ID.appspot.com", // IMPORTANT
   appId: "YOUR_APP_ID"
 };
-// =====================================================
 
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
+const storage = firebase.storage();
 
 let stories = [];
 let currentStory = null;
 let currentSpeech = null;
+let selectedFile = null;
+const DEFAULT_IMG = "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400";
+
+const games = [
+  {id:1, icon:"🧠", title:"Memory Match", desc:"Cards ko yaad rakho"},
+  {id:2, icon:"🎯", title:"Number Guess", desc:"1-100 me number guess karo"},
+  {id:3, icon:"✂️", title:"Rock Paper Scissors", desc:"Computer se khelo"},
+  {id:4, icon:"🔤", title:"Word Scramble", desc:"Words ko theek karo"}
+];
+
+// IMAGE PREVIEW
+document.getElementById('storyImageFile').onchange = function(e){
+  selectedFile = e.target.files[0];
+  if(selectedFile){
+    const reader = new FileReader();
+    reader.onload = function(e){
+      document.getElementById('imgPreview').src = e.target.result;
+      document.getElementById('imgPreview').style.display = 'block';
+    }
+    reader.readAsDataURL(selectedFile);
+  }
+}
+
+function renderGames(){
+  const grid = document.getElementById('gamesGrid');
+  grid.innerHTML = '';
+  games.forEach(g=>{
+    const card = document.createElement('div');
+    card.className = 'card game-card';
+    card.innerHTML = `<div class="game-icon">${g.icon}</div><div class="card-title">${g.title}</div><div style="color:var(--text-dim); font-size:.85rem;">${g.desc}</div>`;
+    card.onclick = ()=>playGame(g.title);
+    grid.appendChild(card);
+  });
+}
+function playGame(name){ showToast(`${name} - Coming Soon!`); }
 
 function renderStories(filter="All"){
   const grid = document.getElementById('storyGrid');
   grid.innerHTML = '';
-  const filtered = filter==="All" ? stories : stories.filter(s=>s.cat===filter);
-  if(filtered.length===0){ grid.innerHTML='<div style="text-align:center; color:var(--text-dim)">No stories in this category</div>'; return; }
-  
+  const filtered = filter==="All"? stories : stories.filter(s=>s.cat===filter);
+  if(filtered.length===0){ grid.innerHTML='<div style="text-align:center; color:var(--text-dim)">No stories</div>'; return; }
+
   filtered.forEach(s=>{
     const card = document.createElement('div');
     card.className = 'card';
     card.innerHTML = `
-      <div class="card-cat">${s.cat} • ${s.lang==='ur'?'UR':'EN'}</div>
-      <div class="card-title">${s.title}</div>
-      <div style="color:var(--text-dim); font-size:.85rem;">${s.content.substring(0,90)}...</div>
-    `;
-    card.onclick = ()=>openReader(s);
-    grid.appendChild(card);
-  });
-}
-
-function loadStories(){
-  db.collection("stories").orderBy("createdAt","desc").onSnapshot(snapshot=>{
-    stories = [];
-    snapshot.forEach(doc=>{ stories.push({id:doc.id, ...doc.data()}) });
-    const activeCat = document.querySelector('.chip.active').dataset.cat;
-    renderStories(activeCat);
-  });
-}
-
-function openAdmin(){ document.getElementById('adminModal').classList.add('show'); }
-function closeAdmin(){ document.getElementById('adminModal').classList.remove('show'); }
-
-async function addStory(){
-  const title = document.getElementById('storyTitle').value;
-  const cat = document.getElementById('storyCategory').value;
-  const lang = document.getElementById('storyLang').value;
-  const content = document.getElementById('storyContent').value;
-  
-  if(!title || !content){ showToast("Title aur Content zaroori hai"); return; }
-  
-  await db.collection("stories").add({
-    title, cat, lang, content,
-    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-  });
-  
-  closeAdmin();
-  showToast("Story Published!");
-  document.getElementById('storyTitle').value='';
-  document.getElementById('storyContent').value='';
-}
-
-function openReader(s){
-  currentStory = s;
-  document.getElementById('rCat').innerText = s.cat;
-  document.getElementById('rTitle').innerText = s.title;
-  document.getElementById('rContent').innerText = s.content;
-  document.getElementById('rContent').className = s.lang==='ur'?'urdu':'';
-  document.getElementById('readerModal').classList.add('show');
-}
-function closeReader(){ 
-  document.getElementById('readerModal').classList.remove('show'); 
-  if(currentSpeech){ speechSynthesis.cancel(); }
-}
-
-document.querySelectorAll('.chip').forEach(chip=>{
-  chip.onclick = ()=>{
-    document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
-    chip.classList.add('active');
-    renderStories(chip.dataset.cat);
-  }
-});
-
-document.getElementById('readAloudBtn').onclick = function(){
-  if(!currentStory) return;
-  if(currentSpeech && speechSynthesis.speaking){
-    speechSynthesis.cancel();
-    this.innerText = '🔊 Read Aloud';
-    return;
-  }
-  currentSpeech = new SpeechSynthesisUtterance(currentStory.content);
-  currentSpeech.lang = currentStory.lang==='ur'?'ur-PK':'en-US';
-  currentSpeech.rate = 0.9;
-  this.innerText = '⏹️ Stop';
-  currentSpeech.onend = ()=>{ this.innerText='🔊 Read Aloud'; }
-  speechSynthesis.speak(currentSpeech);
-}
-
-function showToast(msg){
-  const t = document.getElementById('toast');
-  t.innerText = msg;
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'), 2000);
-}
-
-loadStories();
-</script>
-</body>
-  </html>
+      <img src="${s.image || DEFAULT_IMG}" class="card-cover">
+      <div class="card-body">
+        <div class="card
