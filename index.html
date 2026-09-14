@@ -3,221 +3,261 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>StoryNest — English & Urdu Stories & Games</title>
-<link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Inter:wght@400;600&family=Noto+Nastaliq+Urdu:wght@400;600&display=swap" rel="stylesheet">
+<title>StoryNest — English &amp; Urdu Stories</title>
+<meta name="description" content="StoryNest — read English and Urdu stories: romance, horror, adventure, comedy, Kids story, Sad and more, all in one place.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="StoryNest — English & Urdu Stories">
+<meta property="og:description" content="Stories that stay with you — English & Urdu, in one place. Romance, horror, adventure, comedy, Kids story, Sad and more.">
+<meta property="og:image" content="https://api.iconify.design/twemoji/open-book.svg?width=630&height=630&color=%23C9A227">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="StoryNest — English & Urdu Stories">
+<meta name="twitter:description" content="Stories that stay with you — English & Urdu, in one place.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📖</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-  :root{--ink:#14110F; --surface:#1E1A16; --border:#332C24; --gold:#C9A227; --maroon:#8A3324; --text:#EDE6DA; --text-dim:#A99E8C;}
+  :root{
+    --ink:#14110F; --surface:#1E1A16; --surface2:#241F19; --border:#332C24;
+    --paper:#F2E8D5; --paper-dim:#DCCFAE;
+    --gold:#C9A227; --gold-bright:#E4BE3E; --maroon:#8A3324;
+    --text:#EDE6DA; --text-dim:#A99E8C; --danger:#B4443A; --good:#4E7C4A;
+  }
   *{box-sizing:border-box; margin:0; padding:0;}
-  body{color:var(--text); font-family:'Inter',sans-serif; background:var(--ink); min-height:100vh; display:flex; flex-direction:column;}
-.urdu{font-family:'Noto Nastaliq Urdu', serif; direction:rtl; line-height:2.1;}
-  header{position:sticky; top:0; background:rgba(20,17,15,.92); border-bottom:1px solid var(--border); padding:14px 18px; display:flex; justify-content:space-between; z-index:50;}
-.logo{font-size:1.5rem; font-weight:700; color:var(--text);}.logo span{color:var(--gold);}
-.btn{border:1px solid var(--gold); background:transparent; color:var(--gold); padding:8px 16px; border-radius:8px; cursor:pointer;}
-.btn-solid{background:var(--gold); color:var(--ink); border:none;}
-.hero{text-align:center; padding:50px 18px;}.hero h1{font-family:'Lora',serif; font-size:2.2rem;}.hero h1 em{color:var(--gold);}
-.section-title{max-width:1100px; margin:0 auto; padding:40px 18px 10px; font-family:'Lora',serif; font-size:1.6rem;}.section-title span{color:var(--gold);}
-.chip-row{display:flex; gap:10px; justify-content:center; padding:0 18px 20px; flex-wrap:wrap;}
-.chip{border:1px solid var(--border); background:var(--surface); color:var(--text-dim); padding:7px 15px; border-radius:20px; cursor:pointer;}
-.chip.active{border-color:var(--gold); color:var(--gold);}
-.grid{max-width:1100px; margin:0 auto; padding:0 18px 60px; display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:22px; flex:1;}
-.card{background:var(--surface); border:1px solid var(--border); border-top:3px solid var(--maroon); border-radius:14px; overflow:hidden; cursor:pointer; transition:.2s;}
-.card:hover{border-top-color:var(--gold); transform:translateY(-3px);}
-.card-cover{aspect-ratio:3/4; width:100%; object-fit:cover;}
-.card-body{padding:14px;}
-.card-cat{color:var(--maroon); font-size:.72rem; font-weight:700; text-transform:uppercase;}
-.card-title{font-family:'Lora',serif; font-size:1.1rem; color:var(--gold); margin:5px 0;}
-.game-card{aspect-ratio:1/1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:20px;}
-.game-icon{font-size:3rem; margin-bottom:10px;}
-.overlay{position:fixed; inset:0; background:rgba(0,0,0,.8); z-index:100; display:none; align-items:center; justify-content:center;}
-.overlay.show{display:flex;}
-.modal{background:var(--surface); border:1px solid var(--border); border-radius:14px; max-width:500px; width:90%; padding:24px; position:relative;}
-.modal-close{position:absolute; top:10px; right:14px; background:none; border:none; color:var(--text-dim); font-size:1.5rem; cursor:pointer;}
-.field{margin-bottom:14px;}.field label{display:block; font-size:.8rem; color:var(--text-dim); margin-bottom:5px;}
-.field input,.field select,.field textarea{width:100%; background:var(--ink); border:1px solid var(--border); color:var(--text); padding:9px 12px; border-radius:8px;}
-.field input[type="file"]{padding:6px; cursor:pointer;}
-.img-preview{width:100%; max-height:150px; object-fit:cover; border-radius:8px; margin-top:8px; display:none; border:1px solid var(--border);}
-.reader-body{max-width:700px; background:var(--surface); padding:24px; border-radius:14px; max-height:90vh; overflow-y:auto;}
-.game-body{max-width:500px; background:var(--surface); padding:24px; border-radius:14px; text-align:center;}
-.game-score{font-size:1.2rem; color:var(--gold); margin-bottom:15px;}
-#toast{position:fixed; bottom:22px; left:50%; transform:translateX(-50%); background:var(--gold); color:var(--ink); padding:11px 22px; border-radius:8px; font-weight:600; opacity:0; transition:.25s; z-index:200;}
-#toast.show{opacity:1;}
-footer{border-top:1px solid var(--border); background:var(--surface); padding:40px 18px 20px; margin-top:60px;}
-.footer-inner{max-width:1100px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:30px;}
-.footer-col h3{font-family:'Lora',serif; color:var(--gold); font-size:1.1rem; margin-bottom:12px;}
-.footer-bottom{text-align:center; padding-top:20px; margin-top:20px; border-top:1px solid var(--border); color:var(--text-dim); font-size:.8rem;}
-.memory-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:15px 0;}
-.memory-card{aspect-ratio:1; background:var(--ink); border:2px solid var(--border); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:2rem; cursor:pointer;}
-.memory-card.flipped{background:var(--gold); color:var(--ink);}
-.snake-canvas{border:2px solid var(--gold); background:var(--ink); margin:10px 0;}
-.tic-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; max-width:300px; margin:15px auto;}
-.tic-cell{aspect-ratio:1; background:var(--ink); border:2px solid var(--border); font-size:3rem; display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--gold);}
+  body{
+    color:var(--text); font-family:'Inter',sans-serif; line-height:1.5; min-height:100vh;
+    background-color:var(--ink);
+    background-image:
+      radial-gradient(ellipse 900px 500px at 15% -10%, rgba(201,162,39,.16), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 100% 10%, rgba(138,51,36,.14), transparent 60%),
+      radial-gradient(ellipse 1200px 800px at 50% 100%, rgba(201,162,39,.06), transparent 70%),
+      repeating-linear-gradient(0deg, rgba(255,255,255,.015) 0px, rgba(255,255,255,.015) 1px, transparent 1px, transparent 3px);
+    background-attachment:fixed, fixed, fixed, fixed;
+  }
+  h1,h2,h3,.serif{font-family:'Lora',serif;}
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  button{font-family:inherit; cursor:pointer;}
+  .urdu{font-family:'Noto Nastaliq Urdu', serif; direction:rtl; line-height:2.1;}
+
+  header{position:sticky; top:0; z-index:40; background:rgba(20,17,15,.92); backdrop-filter:blur(8px); border-bottom:1px solid var(--border);}
+  .header-inner{max-width:1100px; margin:0 auto; padding:14px 18px; display:flex; align-items:center; gap:16px; flex-wrap:wrap;}
+  .logo{font-size:1.5rem; font-weight:700; color:var(--paper); letter-spacing:.3px; display:flex; align-items:center; gap:8px; white-space:nowrap;}
+  .logo span{color:var(--gold);}
+  .search-wrap{flex:1; min-width:140px; position:relative;} /* SEARCH ADD */
+  .search-wrap input{width:100%; background:var(--surface); border:1px solid var(--border); color:var(--text); padding:9px 14px; border-radius:8px; font-size:.92rem;}
+  .search-wrap input:focus{outline:none; border-color:var(--gold);}
+  .header-actions{display:flex; align-items:center; gap:10px; margin-left:auto;}
+  .btn{border:1px solid var(--gold); background:transparent; color:var(--gold); padding:8px 16px; font-size:.85rem; font-weight:600; border-radius:8px; transition:background .15s,color .15s;}
+  .btn:hover{background:var(--gold); color:var(--ink);}
+  .btn-solid{background:var(--gold); color:var(--ink); border:1px solid var(--gold);}
+
+  .hero{max-width:1100px; margin:0 auto; padding:56px 18px 28px; text-align:center;}
+  .hero h1{font-size:2.4rem; color:var(--paper); font-weight:600; line-height:1.25;}
+  .hero h1 em{color:var(--gold); font-style:normal;}
+
+  .chip-row{max-width:1100px; margin:0 auto; padding:0 18px 26px; display:flex; gap:10px; flex-wrap:wrap; justify-content:center;}
+  .chip{border:1px solid var(--border); background:var(--surface); color:var(--text-dim); padding:7px 15px; font-size:.85rem; border-radius:20px; transition:all .15s;}
+  .chip.active,.chip:hover{border-color:var(--gold); color:var(--gold);}
+
+  .grid-wrap{max-width:1100px; margin:0 auto; padding:0 18px 60px;}
+  .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:22px;}
+  .card{background:var(--surface); border:1px solid var(--border); border-top:3px solid var(--maroon); border-radius:14px; overflow:hidden; cursor:pointer; display:flex; flex-direction:column; transition:transform .15s,border-color .15s;}
+  .card:hover{transform:translateY(-3px); border-top-color:var(--gold);}
+  .card-cover{aspect-ratio:3/4; background:linear-gradient(150deg,var(--surface2),var(--ink)); display:flex; align-items:center; justify-content:center; overflow:hidden; position:relative;}
+  .card-cover img{width:100%; height:100%; object-fit:cover;}
+  .lang-badge{position:absolute; top:8px; left:8px; background:rgba(20,17,15,.85); color:var(--gold); font-size:.68rem; font-weight:700; padding:3px 8px; letter-spacing:.5px;}
+  .card-body{padding:14px 14px 16px; flex:1; display:flex; flex-direction:column;}
+  .card-cat{color:var(--maroon); font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.5px;}
+  .card-title{font-family:'Lora',serif; font-size:1.08rem; font-weight:600; color:var(--paper); margin:5px 0 6px; line-height:1.3;}
+
+  .games-section{max-width:1100px; margin:0 auto; padding:40px 18px 60px;}
+  .games-section h2{font-family:'Lora',serif; color:var(--gold); font-size:1.7rem; text-align:center; margin-bottom:30px;}
+  .game-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:18px;}
+  .game-card{background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:26px 18px; text-align:center; cursor:pointer; transition:.2s;}
+  .game-card:hover{border-color:var(--gold); transform:translateY(-4px);}
+  .game-card .icon{font-size:2.2rem; margin-bottom:10px;}
+  .game-card h3{color:var(--gold); font-size:1.02rem; margin-bottom:6px; font-family:'Lora',serif;}
+
+  .overlay{position:fixed; inset:0; background:rgba(10,8,6,.72); z-index:100; display:none; align-items:center; justify-content:center; overflow-y:auto; padding:30px 14px;}
+  .overlay.show{display:flex;}
+  .modal{background:var(--surface); border:1px solid var(--border); border-radius:14px; max-width:440px; width:100%; padding:28px 24px; position:relative;}
+  .modal h2{font-family:'Lora',serif; color:var(--paper); font-size:1.3rem; margin-bottom:18px;}
+  .field{margin-bottom:14px;}
+  .field label{display:block; font-size:.82rem; color:var(--text-dim); margin-bottom:5px;}
+  .field input,.field select,.field textarea{width:100%; background:var(--ink); border:1px solid var(--border); color:var(--text); padding:9px 12px; font-size:.9rem; border-radius:8px; font-family:inherit;}
+  .field input[type="file"]{padding:6px;} /* IMAGE UPLOAD ADD */
+  .field textarea{min-height:160px; resize:vertical; line-height:1.6;}
+  .modal-close{position:absolute; top:10px; right:14px; background:none; border:none; color:var(--text-dim); font-size:1.5rem; line-height:1;}
+
+  .reader{background:var(--ink); max-width:720px; width:100%; margin-top:0; padding:0; min-height:100vh;}
+  .reader-top{position:sticky; top:0; background:rgba(20,17,15,.95); backdrop-filter:blur(6px); border-bottom:1px solid var(--border); padding:14px 20px; display:flex; align-items:center; justify-content:space-between; z-index:5;}
+  .reader-body{padding:26px 24px 60px;}
+  .reader-cover{width:100%; max-height:280px; object-fit:cover; margin-bottom:22px; border:1px solid var(--border);}
+  .reader-title{font-family:'Lora',serif; font-size:1.7rem; color:var(--paper); margin:8px 0 6px;}
+  .reader-content{font-size:1.05rem; color:var(--text); white-space:pre-wrap; line-height:1.85;}
+  .reader-content.urdu{font-size:1.35rem;}
+  .reader-actions{display:flex; gap:10px; margin-top:34px; padding-top:22px; border-top:1px solid var(--border);}
+  .icon-btn{display:flex; align-items:center; gap:7px; background:var(--surface); border:1px solid var(--border); color:var(--text); padding:9px 16px; font-size:.85rem; border-radius:8px;}
+
+  #toast{position:fixed; bottom:22px; left:50%; transform:translateX(-50%); background:var(--paper); color:var(--ink); padding:11px 22px; border-radius:8px; font-size:.88rem; font-weight:600; z-index:200; opacity:0; pointer-events:none; transition:opacity .25s;}
+  #toast.show{opacity:1;}
+
+  footer{border-top:1px solid var(--border); padding:34px 18px 24px; text-align:center; color:var(--text-dim); font-size:.82rem;}
+  .img-preview{width:100%; max-height:150px; object-fit:cover; border-radius:8px; margin-top:8px; border:1px solid var(--border); display:none;}
+  /* GAME CSS ADD */
+  .memory-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:15px 0;}
+  .memory-card{aspect-ratio:1; background:var(--ink); border:2px solid var(--border); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:2rem; cursor:pointer;}
+  .memory-card.flipped{background:var(--gold); color:var(--ink);}
+  .tic-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; max-width:300px; margin:15px auto;}
+  .tic-cell{aspect-ratio:1; background:var(--ink); border:2px solid var(--border); font-size:3rem; display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--gold);}
+  .snake-canvas{border:2px solid var(--gold); background:var(--ink); margin:10px 0;}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">📖Story<span>Nest</span></div>
-  <button class="btn" onclick="openAdmin()">+ Add Story</button>
+  <div class="header-inner">
+    <div class="logo">📖Story<span>Nest</span></div>
+    <div class="search-wrap"> <input type="text" id="searchInput" placeholder="Search stories..."> </div> <!-- SEARCH ADD -->
+    <div class="header-actions">
+      <button class="btn" onclick="openAdmin()">+ Add Story</button>
+    </div>
+  </div>
 </header>
 
 <div class="hero"><h1>Stories that stay with you — <em>English & Urdu</em></h1></div>
 
-<h2 class="section-title">📚 <span>Stories</span></h2>
 <div class="chip-row" id="categoryChips">
   <button class="chip active" data-cat="All">All</button>
   <button class="chip" data-cat="Romance">Romance</button>
   <button class="chip" data-cat="Horror">Horror</button>
   <button class="chip" data-cat="Adventure">Adventure</button>
   <button class="chip" data-cat="Comedy">Comedy</button>
-</div>
-<div class="grid" id="storyGrid"><div style="text-align:center; grid-column:1/-1;">Loading Stories...</div></div>
-
-<h2 class="section-title">🎮 <span>Mini Games</span></h2>
-<div class="grid" id="gamesGrid"></div>
-
-<footer>
-  <div class="footer-inner">
-    <div class="footer-col"><h3>📖 StoryNest</h3><p>Read and Listen English & Urdu stories</p></div>
-    <div class="footer-col"><h3>Categories</h3></div>
-    <div class="footer-col"><h3>Quick Links</h3></div>
-    <div class="footer-col"><h3>Follow Us</h3></div>
-  </div>
-  <div class="footer-bottom">© 2026 StoryNest. Made with ❤️ in Pakistan</div>
-</footer>
-
-<!-- ADMIN PASSWORD MODAL -->
-<div id="passwordModal" class="overlay">
-  <div class="modal">
-    <button class="modal-close" onclick="closePassModal()">&times;</button>
-    <h2 style="font-family:Lora; margin-bottom:15px;">Admin Login</h2>
-    <div class="field"><label>Enter Password</label><input type="password" id="adminPass" placeholder="Killer9211" onkeypress="if(event.key==='Enter') checkPassword()"></div>
-    <button class="btn-solid" style="width:100%" onclick="checkPassword()">Login</button>
-    <p id="passError" style="color:var(--maroon); margin-top:10px; display:none;">Wrong Password!</p>
-  </div>
+  <button class="chip" data-cat="Comedy">kids story</button>
+  <button class="chip" data-cat="Comedy">Sad</button>
 </div>
 
-<!-- ADMIN MODAL -->
-<div id="adminModal" class="overlay">
-  <div class="modal">
-    <button class="modal-close" onclick="closeAdmin()">&times;</button>
-    <h2 style="font-family:Lora; margin-bottom:15px;">Add New Story</h2>
-    <div class="field"><label>Story Title</label><input type="text" id="storyTitle"></div>
-    <div class="field">
-      <label>Cover Image</label>
-      <input type="file" id="storyImageFile" accept="image/*">
-      <img id="imgPreview" class="img-preview">
-    </div>
-    <div class="field">
-      <label>Category</label>
-      <select id="storyCategory"><option>Romance</option><option>Horror</option><option>Adventure</option><option>Comedy</option></select>
-    </div>
-    <div class="field">
-      <label>Language</label>
-      <select id="storyLang"><option value="en">English</option><option value="ur">Urdu</option></select>
-    </div>
-    <div class="field"><label>Story Content</label><textarea id="storyContent" rows="6"></textarea></div>
-    <button class="btn-solid" style="width:100%" id="publishBtn" onclick="addStory()">Publish Story</button>
-  </div>
+<div class="grid-wrap">
+  <div class="grid" id="storyGrid">Loading...</div>
 </div>
 
-<!-- READER MODAL -->
-<div id="readerModal" class="overlay">
-  <div class="reader-body">
-    <button class="btn" onclick="closeReader()" style="margin-bottom:15px;">← Back</button>
-    <img id="rImage" class="card-cover" style="margin-bottom:15px; border-radius:8px;">
-    <div class="card-cat" id="rCat"></div>
-    <h1 class="card-title" id="rTitle" style="font-size:1.6rem;"></h1>
-    <div id="rContent" style="line-height:1.8; margin:15px 0;"></div>
-    <button class="btn-solid" id="readAloudBtn">🔊 Read Aloud</button>
-  </div>
-</div>
-
-<!-- GAME MODAL -->
-<div id="gameModal" class="overlay">
-  <div class="game-body" id="gameContent"></div>
-</div>
-
-<div id="toast"></div>
-
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
-
-<script>
-const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.appspot.com",
-  appId: "YOUR_APP_ID"
-};
-
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-const storage = firebase.storage();
-
-let stories = [];
-let currentStory = null;
-let currentSpeech = null;
-let selectedFile = null;
-const ADMIN_PASSWORD = "Killer9211";
-const DEFAULT_IMG = "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400";
-
-const games = [
-  {id:1, icon:"🧠", title:"Memory Match", desc:"Find matching pairs"},
-  {id:2, icon:"🎯", title:"Number Guess", desc:"Guess 1-100 number"},
-  {id:3, icon:"✂️", title:"Rock Paper Scissors", desc:"Play vs Computer"},
-  {id:4, icon:"🔤", title:"Word Scramble", desc:"Unscramble the word"},
-  {id:5, icon:"⭕", title:"Tic Tac Toe", desc:"X vs O"},
-  {id:6, icon:"🐍", title:"Snake Game", desc:"Classic snake"}
-];
-
-// FIX 1: DOM load hone ke baad games render karo
-document.addEventListener('DOMContentLoaded', function(){
-  renderGames();
-});
-
-document.getElementById('storyImageFile').onchange = function(e){
-  selectedFile = e.target.files[0];
-  if(selectedFile){
-    const reader = new FileReader();
-    reader.onload = function(e){
-      document.getElementById('imgPreview').src = e.target.result;
-      document.getElementById('imgPreview').style.display = 'block';
-    }
-    reader.readAsDataURL(selectedFile);
+<div class="games-section">
+  <h2>🎮 Mini Games</h2>
+  <div class="game-grid" id="gamesGrid"></div>
+  // GAMES LOGIC - FULL 5 GAMES
+// 1. MEMORY MATCH
+let memoryCards = ['🍎','🍎','🍌','🍌','🍇','🍇','🍊','🍊']; let flipped = [], matched=0;
+function startMemory(){
+  memoryCards.sort(()=>0.5-Math.random()); flipped=[]; matched=0;
+  document.getElementById('gameContent').innerHTML = `<h2>🧠 Memory Match</h2><div class="game-score">Matched: <span id="memScore">0</span>/4</div><div class="memory-grid">` + memoryCards.map((c,i)=>`<div class="memory-card" onclick="flipCard(${i})" id="card${i}">?</div>`).join('') + `</div>`;
+}
+function flipCard(i){
+  const card = document.getElementById('card'+i);
+  if(flipped.length<2 &&!card.classList.contains('flipped')){
+    card.innerText = memoryCards[i]; card.classList.add('flipped'); flipped.push({i,val:memoryCards[i]});
+    if(flipped.length==2){ setTimeout(checkMatch, 800); }
   }
 }
-
-function renderGames(){
-  const grid = document.getElementById('gamesGrid');
-  if(!grid) return; // FIX 2: agar grid na mile to error na do
-  grid.innerHTML = '';
-  games.forEach(g=>{
-    const card = document.createElement('div');
-    card.className = 'card game-card';
-    card.innerHTML = `<div class="game-icon">${g.icon}</div><div class="card-title">${g.title}</div><div style="color:var(--text-dim); font-size:.85rem;">${g.desc}</div>`;
-    card.onclick = ()=>playGame(g.id); // YE CLICK AB KAAM KAREGA
-    grid.appendChild(card);
-  });
+function checkMatch(){
+  if(flipped[0].val==flipped[1].val){ matched++; document.getElementById('memScore').innerText=matched; if(matched==4) setTimeout(()=>alert('You Won! 🎉'),300); }
+  else{ document.getElementById('card'+flipped[0].i).innerText='?'; document.getElementById('card'+flipped[1].i).innerText='?'; document.getElementById('card'+flipped[0].i).classList.remove('flipped'); document.getElementById('card'+flipped[1].i).classList.remove('flipped'); }
+  flipped=[];
 }
 
-// PASSWORD CHECK
-function openAdmin(){ document.getElementById('passwordModal').classList.add('show'); }
-function closePassModal(){ document.getElementById('passwordModal').classList.remove('show'); document.getElementById('adminPass').value=''; document.getElementById('passError').style.display='none'; }
-function checkPassword(){
-  const pass = document.getElementById('adminPass').value;
-  if(pass === ADMIN_PASSWORD){
-    closePassModal();
-    document.getElementById('adminModal').classList.add('show');
-  } else {
-    document.getElementById('passError').style.display='block';
+// 2. NUMBER GUESS
+let secretNumber = Math.floor(Math.random()*100)+1;
+function startGuess(){
+  document.getElementById('gameContent').innerHTML = `<h2>🎯 Number Guess</h2><p>Guess a number between 1 to 100</p><input type="number" id="guessInput" placeholder="Enter number"><button class="btn-solid" onclick="checkGuess()">Guess</button><p id="guessResult" style="margin-top:10px; color:var(--gold);"></p>`;
+}
+function checkGuess(){
+  let val = parseInt(document.getElementById('guessInput').value);
+  let res = document.getElementById('guessResult');
+  if(val==secretNumber){ res.innerText="Correct! You Won! 🎉"; secretNumber = Math.floor(Math.random()*100)+1; }
+  else if(val<secretNumber){ res.innerText="Too Low! ⬆️"; }
+  else{ res.innerText="Too High! ⬇️"; }
+}
+
+// 3. TIC TAC TOE
+let ticBoard = ['','','','','','','','',''], ticTurn='X';
+function startTicTacToe(){
+  ticBoard = ['','','','','','','','','']; ticTurn='X';
+  document.getElementById('gameContent').innerHTML = `<h2>⭕ Tic Tac Toe</h2><p>Turn: <span id="ticTurn" style="color:var(--gold)">X</span></p><div class="tic-grid">` + Array(9).fill().map((_,i)=>`<div class="tic-cell" onclick="ticMove(${i})" id="tic${i}"></div>`).join('') + `</div>`;
+}
+function ticMove(i){
+  if(ticBoard[i]==''){
+    ticBoard[i]=ticTurn;
+    document.getElementById('tic'+i).innerText=ticTurn;
+    if(checkTicWin()){ setTimeout(()=>alert(ticTurn+' Wins! 🎉'),200); }
+    else if(!ticBoard.includes('')){ setTimeout(()=>alert('Draw!'),200); }
+    else{ ticTurn = ticTurn=='X'?'O':'X'; document.getElementById('ticTurn').innerText=ticTurn; }
   }
 }
-function closeAdmin(){ document.getElementById('adminModal').classList.remove('show'); selectedFile=null; document.getElementById('imgPreview').style.display='none'; document.getElementById('storyImageFile').value=''; }
+function checkTicWin(){
+  const wins = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+  return wins.some(w=>ticBoard[w[0]]&&ticBoard[w[0]]==ticBoard[w[1]]&&ticBoard[w[0]]==ticBoard[w[2]]);
+}
 
-// 6 GAMES LOGIC
-function play
+// 4. SNAKE GAME
+let snake=[{x:10,y:10}], food={x:15,y:15}, dir={x:1,y:0}, snakeScore=0, snakeInterval;
+function startSnake(){
+  snake=[{x:10,y:10}]; food={x:15,y:15}; dir={x:1,y:0}; snakeScore=0;
+  document.getElementById('gameContent').innerHTML = `<h2>🐍 Snake Game</h2><div class="game-score">Score: <span id="snakeScore">0</span></div><canvas class="snake-canvas" id="snakeCanvas" width="300" height="300"></canvas><p>Use Arrow Keys / Mobile: Swipe</p>`;
+  document.addEventListener('keydown', snakeKey);
+  snakeInterval = setInterval(moveSnake, 150);
+}
+function snakeKey(e){ if(e.key=='ArrowUp'&&dir.y==0)dir={x:0,y:-1}; if(e.key=='ArrowDown'&&dir.y==0)dir={x:0,y:1}; if(e.key=='ArrowLeft'&&dir.x==0)dir={x:-1,y:0}; if(e.key=='ArrowRight'&&dir.x==0)dir={x:1,y:0}; }
+function moveSnake(){
+  const head={x:snake[0].x+dir.x, y:snake[0].y+dir.y};
+  if(head.x<0||head.y<0||head.x>19||head.y>19||snake.some(s=>s.x==head.x&&s.y==head.y)){ clearInterval(snakeInterval); document.removeEventListener('keydown', snakeKey); alert('Game Over! Score: '+snakeScore); return; }
+  snake.unshift(head);
+  if(head.x==food.x&&head.y==food.y){ snakeScore++; document.getElementById('snakeScore').innerText=snakeScore; food={x:Math.floor(Math.random()*20), y:Math.floor(Math.random()*20)}; }
+  else{ snake.pop(); }
+  drawSnake();
+}
+function drawSnake(){
+  const canvas=document.getElementById('snakeCanvas'); const ctx=canvas.getContext('2d'); ctx.fillStyle='#14110F'; ctx.fillRect(0,0,300,300);
+  ctx.fillStyle='#C9A227'; snake.forEach(s=>ctx.fillRect(s.x*15,s.y*15,14,14));
+  ctx.fillStyle='#8A3324'; ctx.fillRect(food.x*15,food.y*15,14,14);
+}
+
+// 5. ROCK PAPER SCISSORS
+function startRPS(){
+  document.getElementById('gameContent').innerHTML = `<h2>✂️ Rock Paper Scissors</h2><button class="btn" onclick="rps('rock')">🪨 Rock</button><button class="btn" onclick="rps('paper')">📄 Paper</button><button class="btn" onclick="rps('scissors')">✂️ Scissors</button><p id="rpsResult" style="margin-top:15px; color:var(--gold);"></p>`;
+}
+function rps(choice){
+  const options = ['rock','paper','scissors'];
+  const comp = options[Math.floor(Math.random()*3)];
+  let result = "";
+  if(choice==comp) result="Draw!";
+  else if((choice=='rock'&&comp=='scissors')||(choice=='paper'&&comp=='rock')||(choice=='scissors'&&comp=='paper')) result="You Win! 🎉";
+  else result="You Lose!";
+  document.getElementById('rpsResult').innerText = `You: ${choice} | Computer: ${comp} | ${result}`;
+}
+
+// UPDATE playGame FUNCTION BHI
+function playGame(id){
+  document.getElementById('gameModal').classList.add('show');
+  if(id===1) startMemory();
+  if(id===2) startGuess();
+  if(id===3) startTicTacToe();
+  if(id===4) startSnake();
+  if(id===5) startRPS();
+}
+function closeGame(){
+  document.getElementById('gameModal').classList.remove('show');
+  clearInterval(snakeInterval);
+  document.removeEventListener('keydown', snakeKey);
+}
+</div>
+
+<footer>© 2026 StoryNest. Made with ❤️ Pakistan</footer>
+
+<!-- PASSWORD MODAL ADD -->
+<div id
+
+
+<!D
 
 
 
