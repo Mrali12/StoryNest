@@ -4,11 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>StoryNest — English &amp; Urdu Stories</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-  :root{--ink:#14110F; --surface:#1E1A16; --surface2:#241F19; --border:#332C24; --paper:#F2E8D5; --gold:#C9A227; --maroon:#8A3324; --text:#EDE6DA; --text-dim:#A99E8C; --danger:#B4443A;}
+  :root{--ink:#14110F; --surface:#1E1A16; --border:#332C24; --gold:#C9A227; --maroon:#8A3324; --text:#EDE6DA; --text-dim:#A99E8C; --danger:#B4443A;}
   *{box-sizing:border-box; margin:0; padding:0;}
   body{color:var(--text); font-family:'Inter',sans-serif; background:var(--ink);}
 .urdu{font-family:'Noto Nastaliq Urdu', serif; direction:rtl; line-height:2.1;}
@@ -65,7 +63,7 @@
   <div class="header-inner">
     <div class="logo">📖Story<span>Nest</span></div>
     <div class="search-wrap"><input type="text" id="searchInput" placeholder="Search stories..."></div>
-    <div class="header-actions"><button class="btn" onclick="openAdmin()">+ Add Story</button></div>
+    <div class="header-actions"><button class="btn" id="addStoryBtn">+ Add Story</button></div> <!-- ID ADD KI -->
   </div>
 </header>
 
@@ -86,15 +84,15 @@
   <div class="game-grid" id="gamesGrid"></div>
 </div>
 
-<footer>© 2026 StoryNest. Made with ❤️ Pakistan </footer>
+<footer>© 2026 StoryNest. Made with ❤️</footer>
 
-<div id="passwordModal" class="overlay"><div class="modal"><button class="modal-close" onclick="closePassModal()">&times;</button><h2>Admin Login</h2><div class="field"><label>Enter Password</label><input type="password" id="adminPass" placeholder="Killer9211"></div><button class="btn-solid" style="width:100%" onclick="checkPassword()">Login</button><p id="passError" style="color:var(--danger); margin-top:10px; display:none;">Wrong Password!</p></div></div>
+<div id="passwordModal" class="overlay"><div class="modal"><button class="modal-close" id="closePassBtn">&times;</button><h2>Admin Login</h2><div class="field"><label>Enter Password</label><input type="password" id="adminPass" placeholder="Killer9211"></div><button class="btn-solid" style="width:100%" id="loginBtn">Login</button><p id="passError" style="color:var(--danger); margin-top:10px; display:none;">Wrong Password!</p></div></div>
 
-<div id="adminModal" class="overlay"><div class="modal"><button class="modal-close" onclick="closeAdmin()">&times;</button><h2>Add New Story</h2><div class="field"><label>Story Title</label><input type="text" id="storyTitle"></div><div class="field"><label>Cover Image</label><input type="file" id="storyImageFile" accept="image/*"><img id="imgPreview" class="img-preview"></div><div class="field"><label>Category</label><select id="storyCategory"><option>Romance</option><option>Horror</option><option>Adventure</option><option>Comedy</option></select></div><div class="field"><label>Language</label><select id="storyLang"><option value="en">English</option><option value="ur">Urdu</option></select></div><div class="field"><label>Story Content</label><textarea id="storyContent"></textarea></div><button class="btn-solid" style="width:100%" onclick="addStory()">Publish Story</button></div></div>
+<div id="adminModal" class="overlay"><div class="modal"><button class="modal-close" id="closeAdminBtn">&times;</button><h2>Add New Story</h2><div class="field"><label>Story Title</label><input type="text" id="storyTitle"></div><div class="field"><label>Cover Image</label><input type="file" id="storyImageFile" accept="image/*"><img id="imgPreview" class="img-preview"></div><div class="field"><label>Category</label><select id="storyCategory"><option>Romance</option><option>Horror</option><option>Adventure</option><option>Comedy</option></select></div><div class="field"><label>Language</label><select id="storyLang"><option value="en">English</option><option value="ur">Urdu</option></select></div><div class="field"><label>Story Content</label><textarea id="storyContent"></textarea></div><button class="btn-solid" style="width:100%" id="publishBtn">Publish Story</button></div></div>
 
-<div id="readerModal" class="overlay"><div class="reader"><div class="reader-top"><button class="btn" onclick="closeReader()">← Back</button></div><div class="reader-body"><img id="rImage" class="reader-cover"><div class="card-cat" id="rCat"></div><h1 class="reader-title" id="rTitle"></h1><div class="reader-content" id="rContent"></div><div class="reader-actions"><button class="icon-btn" id="readAloudBtn">🔊 Read Aloud</button></div></div></div></div>
+<div id="readerModal" class="overlay"><div class="reader"><div class="reader-top"><button class="btn" id="closeReaderBtn">← Back</button></div><div class="reader-body"><img id="rImage" class="reader-cover"><div class="card-cat" id="rCat"></div><h1 class="reader-title" id="rTitle"></h1><div class="reader-content" id="rContent"></div><div class="reader-actions"><button class="icon-btn" id="readAloudBtn">🔊 Read Aloud</button></div></div></div></div>
 
-<div id="gameModal" class="overlay"><div class="modal" style="max-width:500px;"><button class="modal-close" onclick="closeGame()">&times;</button><div id="gameContent"></div></div></div>
+<div id="gameModal" class="overlay"><div class="modal" style="max-width:500px;"><button class="modal-close" id="closeGameBtn">&times;</button><div id="gameContent"></div></div></div>
 
 <div id="toast"></div>
 
@@ -115,17 +113,41 @@ const db = firebase.firestore();
 const storage = firebase.storage();
 
 const ADMIN_PASSWORD = "Killer9211";
-let stories = []; let selectedFile = null;
+let stories = []; let selectedFile = null; let snakeInterval;
 
-// IMAGE PREVIEW
-document.getElementById('storyImageFile').onchange = function(e){
-  selectedFile = e.target.files[0];
-  if(selectedFile){
-    const reader = new FileReader();
-    reader.onload = function(e){ document.getElementById('imgPreview').src = e.target.result; document.getElementById('imgPreview').style.display = 'block'; }
-    reader.readAsDataURL(selectedFile);
+// SAB KUCH DOM LOAD HONE KE BAAD CHALEGA
+document.addEventListener('DOMContentLoaded', function(){
+
+  // BUTTON LISTENERS - YEHI FIX HAI
+  document.getElementById('addStoryBtn').onclick = openAdmin;
+  document.getElementById('closePassBtn').onclick = closePassModal;
+  document.getElementById('loginBtn').onclick = checkPassword;
+  document.getElementById('closeAdminBtn').onclick = closeAdmin;
+  document.getElementById('publishBtn').onclick = addStory;
+  document.getElementById('closeReaderBtn').onclick = closeReader;
+  document.getElementById('closeGameBtn').onclick = closeGame;
+  document.getElementById('readAloudBtn').onclick = readAloud;
+
+  // IMAGE PREVIEW
+  document.getElementById('storyImageFile').onchange = function(e){
+    selectedFile = e.target.files[0];
+    if(selectedFile){
+      const reader = new FileReader();
+      reader.onload = function(e){ document.getElementById('imgPreview').src = e.target.result; document.getElementById('imgPreview').style.display = 'block'; }
+      reader.readAsDataURL(selectedFile);
+    }
   }
-}
+
+  // LOAD GAMES
+  const games = [ {id:1, icon:"🧠", title:"Memory Match"}, {id:2, icon:"🎯", title:"Number Guess"}, {id:3, icon:"⭕", title:"Tic Tac Toe"}, {id:4, icon:"🐍", title:"Snake Game"}, {id:5, icon:"✂️", title:"Rock Paper Scissors"} ];
+  document.getElementById('gamesGrid').innerHTML = games.map(g=>`<div class="game-card" data-id="${g.id}"><div class="icon">${g.icon}</div><h3>${g.title}</h3></div>`).join('');
+
+  // GAME CLICK LISTENER
+  document.querySelectorAll('.game-card').forEach(card=>{
+    card.onclick = ()=> playGame(parseInt(card.dataset.id));
+  });
+
+});
 
 // PASSWORD
 function openAdmin(){ document.getElementById('passwordModal').classList.add('show'); }
@@ -151,7 +173,46 @@ function renderStories(list){
   grid.innerHTML = list.map(s=>`<div class="card" onclick='openReader(${JSON.stringify(s).replace(/'/g,"&apos;")})'><div class="card-cover"><img src="${s.image || 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400'}"><div class="lang-badge">${s.lang==='ur'?'UR':'EN'}</div></div><div class="card-body"><div class="card-cat">${s.cat}</div><div class="card-title">${s.title}</div></div></div>`).join('') || '<div style="grid-column:1/-1; text-align:center;">No stories yet</div>';
 }
 
-//
+// SEARCH + FILTER
+function filterStories(){
+  const search = document.getElementById('searchInput').value.toLowerCase(); const cat = document.querySelector('.chip.active').dataset.cat;
+  let filtered = stories; if(cat!== 'All') filtered = filtered.filter(s=>s.cat===cat); if(search) filtered = filtered.filter(s=>s.title.toLowerCase().includes(search));
+  renderStories(filtered);
+}
+document.getElementById('searchInput').oninput = filterStories;
+document.querySelectorAll('.chip').forEach(chip=>{ chip.onclick=()=>{ document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active')); chip.classList.add('active'); filterStories(); } });
+
+// READER
+function openReader(s){ document.getElementById('rImage').src = s.image; document.getElementById('rCat').innerText = s.cat; document.getElementById('rTitle').innerText = s.title; document.getElementById('rContent').innerText = s.content; document.getElementById('rContent').className = 'reader-content ' + (s.lang==='ur'?'urdu':''); document.getElementById('readerModal').classList.add('show'); window.currentStory = s; }
+function closeReader(){ document.getElementById('readerModal').classList.remove('show'); speechSynthesis.cancel(); }
+function readAloud(){ if(speechSynthesis.speaking){ speechSynthesis.cancel(); document.getElementById('readAloudBtn').innerText='🔊 Read Aloud'; return; } let u=new SpeechSynthesisUtterance(window.currentStory.content); u.lang=window.currentStory.lang=='ur'?'ur-PK':'en-US'; document.getElementById('readAloudBtn').innerText='⏹️ Stop'; u.onend=()=>document.getElementById('readAloudBtn').innerText='🔊 Read Aloud'; speechSynthesis.speak(u); }
+
+// GAMES
+function playGame(id){ document.getElementById('gameModal').classList.add('show'); if(id===1) startMemory(); if(id===2) startGuess(); if(id===3) startTicTacToe(); if(id===4) startSnake(); if(id===5) startRPS(); }
+function closeGame(){ document.getElementById('gameModal').classList.remove('show'); clearInterval(snakeInterval); document.removeEventListener('keydown', snakeKey); }
+
+// 1. MEMORY MATCH
+let memoryCards = ['🍎','🍎','🍌','🍌','🍇','🍇','🍊','🍊']; let flipped = [], matched=0;
+function startMemory(){ memoryCards.sort(()=>0.5-Math.random()); flipped=[]; matched=0; document.getElementById('gameContent').innerHTML = `<h2>🧠 Memory Match</h2><div class="game-score">Matched: <span id="memScore">0</span>/4</div><div class="memory-grid">` + memoryCards.map((c,i)=>`<div class="memory-card" onclick="flipCard(${i})" id="card${i}">?</div>`).join('') + `</div>`; }
+function flipCard(i){ const card = document.getElementById('card'+i); if(flipped.length<2 &&!card.classList.contains('flipped')){ card.innerText = memoryCards[i]; card.classList.add('flipped'); flipped.push({i,val:memoryCards[i]}); if(flipped.length==2){ setTimeout(checkMatch, 800); } } }
+function checkMatch(){ if(flipped[0].val==flipped[1].val){ matched++; document.getElementById('memScore').innerText=matched; if(matched==4) setTimeout(()=>alert('You Won! 🎉'),300); } else{ document.getElementById('card'+flipped[0].i).innerText='?'; document.getElementById('card'+flipped[1].i).innerText='?'; document.getElementById('card'+flipped[0].i).classList.remove('flipped'); document.getElementById('card'+flipped[1].i).classList.remove('flipped'); } flipped=[]; }
+
+// 2. NUMBER GUESS
+let secretNumber = Math.floor(Math.random()*100)+1;
+function startGuess(){ document.getElementById('gameContent').innerHTML = `<h2>🎯 Number Guess</h2><p>Guess 1 to 100</p><input type="number" id="guessInput"><button class="btn-solid" onclick="checkGuess()">Guess</button><p id="guessResult" style="margin-top:10px; color:var(--gold);"></p>`; }
+function checkGuess(){ let val = parseInt(document.getElementById('guessInput').value); let res = document.getElementById('guessResult'); if(val==secretNumber){ res.innerText="Correct! You Won! 🎉"; secretNumber = Math.floor(Math.random()*100)+1; } else if(val<secretNumber){ res.innerText="Too Low! ⬆️"; } else{ res.innerText="Too High! ⬇️"; } }
+
+// 3. TIC TAC TOE
+let ticBoard = ['','',''], ticTurn='X';
+function startTicTacToe(){ ticBoard = ['','','']; ticTurn='X'; document.getElementById('gameContent').innerHTML = `<h2>⭕ Tic Tac Toe</h2><p>Turn: <span id="ticTurn" style="color:var(--gold)">X</span></p><div class="tic-grid">` + Array(9).fill().map((_,i)=>`<div class="tic-cell" onclick="ticMove(${i})" id="tic${i}"></div>`).join('') + `</div>`; }
+function ticMove(i){ if(ticBoard[i]==''){ ticBoard[i]=ticTurn; document.getElementById('tic'+i).innerText=ticTurn; if(checkTicWin()){ setTimeout(()=>alert(ticTurn+' Wins! 🎉'),200); } else if(!ticBoard.includes('')){ setTimeout(()=>alert('Draw!'),200); } else{ ticTurn = ticTurn=='X'?'O':'X'; document.getElementById('ticTurn').innerText=ticTurn; } } }
+function checkTicWin(){ const wins = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]; return wins.some(w=>ticBoard[w[0]]&&ticBoard[w[0]]==ticBoard[w[1]]&&ticBoard[w[0]]==ticBoard[w[2]]); }
+
+// 4. SNAKE GAME
+let snake=[{x:10,y:10}], food={x:15,y:15}, dir={x:1,y:0}, snakeScore=0;
+function startSnake(){ snake=[{x:10,y:10}]; food={x:15,y:15}; dir={x:1,y:0}; snakeScore=0; document.getElementById('gameContent').innerHTML = `<h2>🐍 Snake Game</h2><div class="game-score">Score: <span id="snakeScore">0</span></div><canvas class="snake-canvas" id="snakeCanvas" width="300" height="300"></canvas><p>Use Arrow Keys</p>`; document.addEventListener('keydown', snakeKey); snakeInterval = setInterval(moveSnake, 150); }
+function snakeKey(e){ if(e.key=='ArrowUp'&&dir.y==0)dir={x:0,y:-1}; if(e.key=='ArrowDown'&&dir.y==0)dir={x:0,y:1}; if(e.key=='ArrowLeft'&&dir.x==0)dir={x:-1,y:0}; if(e.key=='ArrowRight'&
+
 
 
 
