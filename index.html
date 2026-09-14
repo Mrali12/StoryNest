@@ -45,7 +45,6 @@ footer{border-top:1px solid var(--border); background:var(--surface); padding:40
 .footer-inner{max-width:1100px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:30px;}
 .footer-col h3{font-family:'Lora',serif; color:var(--gold); font-size:1.1rem; margin-bottom:12px;}
 .footer-bottom{text-align:center; padding-top:20px; margin-top:20px; border-top:1px solid var(--border); color:var(--text-dim); font-size:.8rem;}
-/* GAME CSS */
 .memory-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:15px 0;}
 .memory-card{aspect-ratio:1; background:var(--ink); border:2px solid var(--border); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:2rem; cursor:pointer;}
 .memory-card.flipped{background:var(--gold); color:var(--ink);}
@@ -89,8 +88,9 @@ footer{border-top:1px solid var(--border); background:var(--surface); padding:40
 <!-- ADMIN PASSWORD MODAL -->
 <div id="passwordModal" class="overlay">
   <div class="modal">
+    <button class="modal-close" onclick="closePassModal()">&times;</button>
     <h2 style="font-family:Lora; margin-bottom:15px;">Admin Login</h2>
-    <div class="field"><label>Enter Password</label><input type="password" id="adminPass" placeholder="Killer9211"></div>
+    <div class="field"><label>Enter Password</label><input type="password" id="adminPass" placeholder="Killer9211" onkeypress="if(event.key==='Enter') checkPassword()"></div>
     <button class="btn-solid" style="width:100%" onclick="checkPassword()">Login</button>
     <p id="passError" style="color:var(--maroon); margin-top:10px; display:none;">Wrong Password!</p>
   </div>
@@ -160,7 +160,7 @@ let stories = [];
 let currentStory = null;
 let currentSpeech = null;
 let selectedFile = null;
-const ADMIN_PASSWORD = "Killer9211"; // PASSWORD
+const ADMIN_PASSWORD = "Killer9211";
 const DEFAULT_IMG = "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400";
 
 const games = [
@@ -171,6 +171,11 @@ const games = [
   {id:5, icon:"⭕", title:"Tic Tac Toe", desc:"X vs O"},
   {id:6, icon:"🐍", title:"Snake Game", desc:"Classic snake"}
 ];
+
+// FIX 1: DOM load hone ke baad games render karo
+document.addEventListener('DOMContentLoaded', function(){
+  renderGames();
+});
 
 document.getElementById('storyImageFile').onchange = function(e){
   selectedFile = e.target.files[0];
@@ -186,25 +191,25 @@ document.getElementById('storyImageFile').onchange = function(e){
 
 function renderGames(){
   const grid = document.getElementById('gamesGrid');
+  if(!grid) return; // FIX 2: agar grid na mile to error na do
   grid.innerHTML = '';
   games.forEach(g=>{
     const card = document.createElement('div');
     card.className = 'card game-card';
     card.innerHTML = `<div class="game-icon">${g.icon}</div><div class="card-title">${g.title}</div><div style="color:var(--text-dim); font-size:.85rem;">${g.desc}</div>`;
-    card.onclick = ()=>playGame(g.id);
+    card.onclick = ()=>playGame(g.id); // YE CLICK AB KAAM KAREGA
     grid.appendChild(card);
   });
 }
 
 // PASSWORD CHECK
 function openAdmin(){ document.getElementById('passwordModal').classList.add('show'); }
+function closePassModal(){ document.getElementById('passwordModal').classList.remove('show'); document.getElementById('adminPass').value=''; document.getElementById('passError').style.display='none'; }
 function checkPassword(){
   const pass = document.getElementById('adminPass').value;
   if(pass === ADMIN_PASSWORD){
-    document.getElementById('passwordModal').classList.remove('show');
+    closePassModal();
     document.getElementById('adminModal').classList.add('show');
-    document.getElementById('adminPass').value='';
-    document.getElementById('passError').style.display='none';
   } else {
     document.getElementById('passError').style.display='block';
   }
@@ -212,140 +217,10 @@ function checkPassword(){
 function closeAdmin(){ document.getElementById('adminModal').classList.remove('show'); selectedFile=null; document.getElementById('imgPreview').style.display='none'; document.getElementById('storyImageFile').value=''; }
 
 // 6 GAMES LOGIC
-function playGame(id){
-  document.getElementById('gameModal').classList.add('show');
-  const content = document.getElementById('gameContent');
+function play
 
-  if(id===1) startMemory();
-  if(id===2) content.innerHTML = `<h2>🎯 Number Guess</h2><input type="number" id="guessInput" placeholder="Enter 1-100"><button class="btn-solid" onclick="checkGuess()">Guess</button><p id="guessResult"></p><button class="btn" onclick="closeGame()">Close</button>`;
-  if(id===3) content.innerHTML = `<h2>✂️ Rock Paper Scissors</h2><button class="btn" onclick="rps('rock')">🪨 Rock</button><button class="btn" onclick="rps('paper')">📄 Paper</button><button class="btn" onclick="rps('scissors')">✂️ Scissors</button><p id="rpsResult"></p><button class="btn" onclick="closeGame()">Close</button>`;
-  if(id===4) content.innerHTML = `<h2>🔤 Word Scramble</h2><p>Word: STORY</p><input type="text" id="scrambleInput"><button class="btn-solid" onclick="checkScramble()">Submit</button><p id="scrambleResult"></p><button class="btn" onclick="closeGame()">Close</button>`;
-  if(id===5) startTicTacToe();
-  if(id===6) startSnake();
-}
 
-function closeGame(){ document.getElementById('gameModal').classList.remove('show'); clearInterval(snakeInterval); }
 
-// MEMORY MATCH
-let memoryCards = ['🍎','🍎','🍌','🍌','🍇','🍇','🍊','🍊'];
-let flipped = [], matched=0;
-function startMemory(){
-  memoryCards.sort(()=>0.5-Math.random());
-  let html = `<h2>🧠 Memory Match</h2><div class="game-score">Matched: <span id="memScore">0</span>/4</div><div class="memory-grid">`;
-  memoryCards.forEach((c,i)=>{ html+=`<div class="memory-card" onclick="flipCard(${i})" id="card${i}">?</div>` });
-  html+=`</div><button class="btn" onclick="closeGame()">Close</button>`;
-  document.getElementById('gameContent').innerHTML = html;
-}
-function flipCard(i){
-  const card = document.getElementById('card'+i);
-  if(flipped.length<2 &&!card.classList.contains('flipped')){
-    card.innerText = memoryCards[i]; card.classList.add('flipped'); flipped.push({i,val:memoryCards[i]});
-    if(flipped.length==2){ setTimeout(checkMatch, 800); }
-  }
-}
-function checkMatch(){
-  if(flipped[0].val==flipped[1].val){ matched++; document.getElementById('memScore').innerText=matched; if(matched==4) setTimeout(()=>alert('You Won!'),300); }
-  else{ document.getElementById('card'+flipped[0].i).innerText='?'; document.getElementById('card'+flipped[1].i).innerText='?'; document.getElementById('card'+flipped[0].i).classList.remove('flipped'); document.getElementById('card'+flipped[1].i).classList.remove('flipped'); }
-  flipped=[];
-}
 
-// TIC TAC TOE
-let ticBoard = ['','','','','','','','',''], ticTurn='X';
-function startTicTacToe(){
-  ticBoard = ['','','','','','','','','']; ticTurn='X';
-  let html = `<h2>⭕ Tic Tac Toe</h2><p>Turn: <span id="ticTurn">X</span></p><div class="tic-grid">`;
-  for(let i=0;i<9;i++) html+=`<div class="tic-cell" onclick="ticMove(${i})" id="tic${i}"></div>`;
-  html+=`</div><button class="btn" onclick="closeGame()">Close</button>`;
-  document.getElementById('gameContent').innerHTML = html;
-}
-function ticMove(i){
-  if(ticBoard[i]==''){ ticBoard[i]=ticTurn; document.getElementById('tic'+i).innerText=ticTurn; if(checkTicWin()){ setTimeout(()=>alert(ticTurn+' Wins!'),200); }
-  else if(!ticBoard.includes('')){ setTimeout(()=>alert('Draw!'),200); }
-  else{ ticTurn = ticTurn=='X'?'O':'X'; document.getElementById('ticTurn').innerText=ticTurn; } }
-}
-function checkTicWin(){
-  const wins = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
-  return wins.some(w=>ticBoard[w[0]]&&ticBoard[w[0]]==ticBoard[w[1]]&&ticBoard[w[0]]==ticBoard[w[2]]);
-}
 
-// SNAKE GAME
-let snake=[{x:10,y:10}], food={x:15,y:15}, dir={x:1,y:0}, snakeScore=0, snakeInterval;
-function startSnake(){
-  snake=[{x:10,y:10}]; food={x:15,y:15}; dir={x:1,y:0}; snakeScore=0;
-  let html = `<h2>🐍 Snake Game</h2><div class="game-score">Score: <span id="snakeScore">0</span></div><canvas class="snake-canvas" id="snakeCanvas" width="300" height="300"></canvas><p>Use Arrow Keys</p><button class="btn" onclick="closeGame()">Close</button>`;
-  document.getElementById('gameContent').innerHTML = html;
-  document.addEventListener('keydown', snakeKey);
-  snakeInterval = setInterval(moveSnake, 150);
-}
-function snakeKey(e){ if(e.key=='ArrowUp'&&dir.y==0)dir={x:0,y:-1}; if(e.key=='ArrowDown'&&dir.y==0)dir={x:0,y:1}; if(e.key=='ArrowLeft'&&dir.x==0)dir={x:-1,y:0}; if(e.key=='ArrowRight'&&dir.x==0)dir={x:1,y:0}; }
-function moveSnake(){
-  const head={x:snake[0].x+dir.x, y:snake[0].y+dir.y};
-  if(head.x<0||head.y<0||head.x>19||head.y>19||snake.some(s=>s.x==head.x&&s.y==head.y)){ clearInterval(snakeInterval); alert('Game Over! Score: '+snakeScore); return; }
-  snake.unshift(head);
-  if(head.x==food.x&&head.y==food.y){ snakeScore++; document.getElementById('snakeScore').innerText=snakeScore; food={x:Math.floor(Math.random()*20), y:Math.floor(Math.random()*20)}; }
-  else{ snake.pop(); }
-  drawSnake();
-}
-function drawSnake(){
-  const canvas=document.getElementById('snakeCanvas'); const ctx=canvas.getContext('2d'); ctx.fillStyle='#14110F'; ctx.fillRect(0,0,300,300);
-  ctx.fillStyle='#C9A227'; snake.forEach(s=>ctx.fillRect(s.x*15,s.y*15,14,14));
-  ctx.fillStyle='#8A3324'; ctx.fillRect(food.x*15,food.y*15,14,14);
-}
 
-// Other 3 Games
-let secretNumber = Math.floor(Math.random()*100)+1;
-function checkGuess(){ let val = document.getElementById('guessInput').value; let res = document.getElementById('guessResult'); if(val==secretNumber){ res.innerText="Correct! You Won!"; secretNumber = Math.floor(Math.random()*100)+1; } else if(val<secretNumber){ res.innerText="Too Low!"; } else{ res.innerText="Too High!"; } }
-function rps(choice){ const options = ['rock','paper','scissors']; const comp = options[Math.floor(Math.random()*3)]; let result = ""; if(choice==comp) result="Draw!"; else if((choice=='rock'&&comp=='scissors')||(choice=='paper'&&comp=='rock')||(choice=='scissors'&&comp=='paper')) result="You Win!"; else result="You Lose!"; document.getElementById('rpsResult').innerText = `You: ${choice} | Computer: ${comp} | ${result}`; }
-function checkScramble(){ let val = document.getElementById('scrambleInput').value.toLowerCase(); let res = document.getElementById('scrambleResult'); if(val=="story") res.innerText="Correct!"; else res.innerText="Wrong! Try again"; }
-
-function renderStories(filter="All"){
-  const grid = document.getElementById('storyGrid');
-  grid.innerHTML = '';
-  const filtered = filter==="All"? stories : stories.filter(s=>s.cat===filter);
-  if(filtered.length===0){ grid.innerHTML='<div style="text-align:center; grid-column:1/-1; color:var(--text-dim)">No stories in this category</div>'; return; }
-
-  filtered.forEach(s=>{
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.innerHTML = `
-      <img src="${s.image || DEFAULT_IMG}" class="card-cover">
-      <div class="card-body">
-        <div class="card-cat">${s.cat} • ${s.lang==='ur'?'UR':'EN'}</div>
-        <div class="card-title">${s.title}</div>
-      </div>
-    `;
-    card.onclick = ()=>openReader(s);
-    grid.appendChild(card);
-  });
-}
-
-function loadStories(){
-  db.collection("stories").orderBy("createdAt","desc").onSnapshot(snapshot=>{
-    stories = [];
-    snapshot.forEach(doc=>{ stories.push({id:doc.id,...doc.data()}) });
-    renderStories(document.querySelector('.chip.active').dataset.cat);
-  });
-}
-
-async function addStory(){
-  const title = document.getElementById('storyTitle').value;
-  const cat = document.getElementById('storyCategory').value;
-  const lang = document.getElementById('storyLang').value;
-  const content = document.getElementById('storyContent').value;
-  const publishBtn = document.getElementById('publishBtn');
-
-  if(!title ||!content){ showToast("Title aur Content zaroori hai"); return; }
-
-  publishBtn.innerText = "Uploading...";
-  publishBtn.disabled = true;
-
-  let imageUrl = DEFAULT_IMG;
-  if(selectedFile){
-    const storageRef = storage.ref('story_covers/' + Date.now() + '_' + selectedFile.name);
-    const snapshot = await storageRef.put(selectedFile);
-    imageUrl = await snapshot.ref.getDownloadURL();
-  }
-
-  await db.collection("stories").add({
-    title, image: imageUrl, cat, lang, content,
-    c
